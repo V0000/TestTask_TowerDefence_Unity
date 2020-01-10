@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,6 +37,12 @@ namespace Cameras
         void RecalculatingBoundingRect()
         {
             transform.position = cameraPosition;
+            
+        }
+		        
+		void PanTo()
+        {
+            //transform.position = cameraPosition;
             
         }
     }
