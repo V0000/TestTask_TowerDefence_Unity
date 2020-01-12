@@ -4,8 +4,6 @@ using UnityEngine;
 using Utilities;
 
 
-namespace Input
-{
     public class InputController : Singleton<InputController>
     {
         // Start is called before the first frame update
@@ -20,5 +18,3 @@ namespace Input
 
         }
     }
-}
-

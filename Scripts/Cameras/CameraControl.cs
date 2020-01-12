@@ -1,98 +1,84 @@
 using UnityEngine;
 using System.Collections;
 
-public class CameraControl : MonoBehaviour {
+public class CameraControl : MonoBehaviour
+{
+    [Header("Speed Settings")]
+    public float moveSpeed = 5;
+    public float rotationSpeed = 1;
+    public float heightSpeed = 5;
+    public float glideSpeed = 3;
 
-	public float speed = 5;
+    [Header("Camera Settings")]
+    public float cameraAngle = 60;
+    public float maxHeight = 25;
+    public float minHeight = 5;
 
-	public KeyCode left = KeyCode.A;
-	public KeyCode right = KeyCode.D;
-	public KeyCode up = KeyCode.W;
-	public KeyCode down = KeyCode.S;
-	public KeyCode rotCamA = KeyCode.Q;
-	public KeyCode rotCamB = KeyCode.E;
+    [Header("Input Settings")]
+    public KeyCode rotationLeft = KeyCode.Q;
+    public KeyCode rotationRight = KeyCode.E;
 
-	public Transform startPoint;
-	public int rotationX = 70;
-	public float maxHeight = 15;
-	public float minHeight = 5;
-	public int rotationLimit = 240;
 
-	private float camRotation;
-	private float height;
-	private float tmpHeight;
-	private float h, v;
-	private bool L, R, U, D;
 
-	void Start () 
-	{
-		height = (maxHeight + minHeight) / 2;
-		tmpHeight = height;
-		camRotation = rotationLimit / 2;
-		transform.position = new Vector3(startPoint.position.x, height, startPoint.position.z);
-	}
+    private float cameraRotation;
+    private float targetCamRotation;
+    private float height;
+    private float targetHeight;
+    private Vector3 targetDirection;
+    public GameObject trackingObject;
 
-	public void CursorTriggerEnter(string triggerName)
-	{
-		switch(triggerName)
-		{
-		case "L":
-			L = true;
-			break;
-		case "R":
-			R = true;
-			break;
-		case "U":
-			U = true;
-			break;
-		case "D":
-			D = true;
-			break;
-		}
-	}
+    void Start()
+    {
+        cameraRotation = transform.rotation.y;
+        targetCamRotation = cameraRotation;
+        height = transform.position.y;
+        targetHeight = height;
 
-	public void CursorTriggerExit(string triggerName)
-	{
-		switch(triggerName)
-		{
-		case "L":
-			L = false;
-			break;
-		case "R":
-			R = false;
-			break;
-		case "U":
-			U = false;
-			break;
-		case "D":
-			D = false;
-			break;
-		}
-	}
+    }
 
-	void Update () 
-	{
-		if(Input.GetKey(left) || L) h = -1; else if(Input.GetKey(right) || R) h = 1; else h = 0;
-		if(Input.GetKey(down) || D) v = -1; else if(Input.GetKey(up) || U) v = 1; else v = 0;
+    void Update()
+    {
 
-		if(Input.GetKey(rotCamB)) camRotation -= 3; else if(Input.GetKey(rotCamA)) camRotation += 3;
-		camRotation = Mathf.Clamp(camRotation, 0, rotationLimit);
+        // Tracking?
+        if (trackingObject != null)
+        {
+            MoveCameraTo(trackingObject.transform.position);
 
-		if(Input.GetAxis("Mouse ScrollWheel") > 0)
-		{
-			if(height < maxHeight) tmpHeight += 1;
-		}
-		if(Input.GetAxis("Mouse ScrollWheel") < 0)
-		{
-			if(height > minHeight) tmpHeight -= 1;
-		}
+            if (false)//trackingObject.CharacterController.IsTarget())
+            {
+                StopTracking();
+            }
+        }
+        else
+        {
+            Vector3 targetDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+            MoveCameraTo(targetDirection);
+        }
 
-		tmpHeight = Mathf.Clamp(tmpHeight, minHeight, maxHeight);
-		height = Mathf.Lerp(height, tmpHeight, 3 * Time.deltaTime);
+        RecalculatePosition();
 
-		Vector3 direction = new Vector3(h,v,0);
-		transform.Translate(direction * speed * Time.deltaTime);
-		transform.position = new Vector3(transform.position.x, height, transform.position.z);
-		transform.rotation = Quaternion.Euler(rotationX, camRotation, 0);
-	}
+    }
+
+    void RecalculatePosition()
+    {
+        if (Input.GetKey(rotationRight)) targetCamRotation -= rotationSpeed;
+        else if (Input.GetKey(rotationLeft)) targetCamRotation += rotationSpeed;
+        cameraRotation = Mathf.Lerp(cameraRotation, targetCamRotation, glideSpeed * Time.deltaTime);
+
+        targetHeight += Input.GetAxis("Mouse ScrollWheel") * heightSpeed;
+        targetHeight = Mathf.Clamp(targetHeight, minHeight, maxHeight);
+        height = Mathf.Lerp(height, targetHeight, glideSpeed * Time.deltaTime);
+    }
+
+    void MoveCameraTo(Vector3 position)
+    {
+        transform.Translate(position * moveSpeed * Time.deltaTime);
+        transform.position = new Vector3(transform.position.x, height, transform.position.z);
+        transform.rotation = Quaternion.Euler(cameraAngle, cameraRotation, 0);
+    }
+
+    void StopTracking()
+    {
+        trackingObject = null;
+    }
 }
