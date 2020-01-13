@@ -25,6 +25,7 @@ public class CameraControl : MonoBehaviour
     private float height;
     private float targetHeight;
     private Vector3 targetDirection;
+	private Camera cachedCamera;
     public GameObject trackingObject;
 
     void Start()
@@ -33,7 +34,7 @@ public class CameraControl : MonoBehaviour
         targetCamRotation = cameraRotation;
         height = transform.position.y;
         targetHeight = height;
-
+		cachedCamera = GetComponent<UnityEngine.Camera>();
     }
 
     void Update()
@@ -42,7 +43,9 @@ public class CameraControl : MonoBehaviour
         // Tracking?
         if (trackingObject != null)
         {
-            MoveCameraTo(trackingObject.transform.position);
+			targetDirection = (trackingObject.transform.position - cachedCamera.transform.position).normalize();
+			targetDirection.z = 0;
+            MoveCameraTo(targetDirection);
 
             if (false)//trackingObject.CharacterController.IsTarget())
             {
@@ -51,7 +54,7 @@ public class CameraControl : MonoBehaviour
         }
         else
         {
-            Vector3 targetDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+            targetDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
             MoveCameraTo(targetDirection);
         }
 
