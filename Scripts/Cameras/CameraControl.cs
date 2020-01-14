@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraControl : MonoBehaviour
 {
     [Header("Speed Settings")]
-    public float moveSpeed = 5;
+    public float moveSpeed = 10;
     public float rotationSpeed = 1;
     public float heightSpeed = 5;
     public float glideSpeed = 3;
@@ -13,7 +13,8 @@ public class CameraControl : MonoBehaviour
     public float cameraAngle = 60;
     public float maxHeight = 25;
     public float minHeight = 5;
-	public float ScreenEdgeBorderThickness = 5.0f; // distance from screen edge. Used for mouse movement
+    [Tooltip ("Distance from screen edge. Used for mouse movement")]
+	public float ScreenEdgeBorderThickness = 20; 
 
     [Header("Input Settings")]
     public KeyCode rotationLeft = KeyCode.Q;
@@ -51,7 +52,7 @@ public class CameraControl : MonoBehaviour
 		        // Tracking?
         if (trackingObject != null)
         {
-			targetDirection = (trackingObject.transform.position - cachedCamera.transform.position).normalize();
+			targetDirection = (trackingObject.transform.position - cachedCamera.transform.position).normalized;
 			targetDirection.z = 0;
             
 
