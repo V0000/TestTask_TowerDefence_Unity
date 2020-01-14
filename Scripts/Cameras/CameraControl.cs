@@ -13,6 +13,7 @@ public class CameraControl : MonoBehaviour
     public float cameraAngle = 60;
     public float maxHeight = 25;
     public float minHeight = 5;
+	public float ScreenEdgeBorderThickness = 5.0f; // distance from screen edge. Used for mouse movement
 
     [Header("Input Settings")]
     public KeyCode rotationLeft = KeyCode.Q;
@@ -62,22 +63,23 @@ public class CameraControl : MonoBehaviour
         else
         {
             targetDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0); 
-
-
-                //разобрать всю эту хрень
+                
                
-                        if (20 > Input.mousePosition.x){
-                                transform.position -= new Vector3(CameraSpeed,0,0);
+                        if (Input.mousePosition.x <= ScreenEdgeBorderThickness)
+						{
+                                targetDirection += Vector3.left;
                         }
-                        if ((Screen.width-10)<Input.mousePosition.x){
-                               
-                                transform.position += new Vector3(CameraSpeed,0,0);
+                        if (Input.mousePosition.x >= Screen.width - ScreenEdgeBorderThickness)
+						{                               
+                                targetDirection += Vector3.right;
                         }
-                        if (20 > Input.mousePosition.y){
-                                transform.position -= new Vector3(0,0,CameraSpeed);
+                        if (Input.mousePosition.y <= ScreenEdgeBorderThickness)
+						{
+                                targetDirection -= Vector3.forward;
                         }
-                        if ((Screen.height-10)<Input.mousePosition.y){
-                                transform.position += new Vector3(0,0,CameraSpeed);
+                        if (Input.mousePosition.y >= Screen.height - ScreenEdgeBorderThickness)
+						{							
+                                targetDirection += Vector3.forward;
                         }			
         }
         
