@@ -39,13 +39,20 @@ public class CameraControl : MonoBehaviour
 
     void Update()
     {
+		RecalculatePosition();
+		RecalculateRotation();
+		RecalculateHeight();
+		MoveCameraTo(targetDirection); 
+    }
 
-        // Tracking?
+    void RecalculatePosition()
+    {
+		        // Tracking?
         if (trackingObject != null)
         {
 			targetDirection = (trackingObject.transform.position - cachedCamera.transform.position).normalize();
 			targetDirection.z = 0;
-            MoveCameraTo(targetDirection);
+            
 
             if (false)//trackingObject.CharacterController.IsTarget())
             {
@@ -54,25 +61,43 @@ public class CameraControl : MonoBehaviour
         }
         else
         {
-            targetDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
-            MoveCameraTo(targetDirection);
+            targetDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0); 
+
+
+                //разобрать всю эту хрень
+               
+                        if (20 > Input.mousePosition.x){
+                                transform.position -= new Vector3(CameraSpeed,0,0);
+                        }
+                        if ((Screen.width-10)<Input.mousePosition.x){
+                               
+                                transform.position += new Vector3(CameraSpeed,0,0);
+                        }
+                        if (20 > Input.mousePosition.y){
+                                transform.position -= new Vector3(0,0,CameraSpeed);
+                        }
+                        if ((Screen.height-10)<Input.mousePosition.y){
+                                transform.position += new Vector3(0,0,CameraSpeed);
+                        }			
         }
-
-        RecalculatePosition();
-
+        
     }
-
-    void RecalculatePosition()
+	
+	    void RecalculateRotation()
     {
         if (Input.GetKey(rotationRight)) targetCamRotation -= rotationSpeed;
         else if (Input.GetKey(rotationLeft)) targetCamRotation += rotationSpeed;
         cameraRotation = Mathf.Lerp(cameraRotation, targetCamRotation, glideSpeed * Time.deltaTime);
 
+    }
+	    void RecalculateHeight()
+    {
         targetHeight += Input.GetAxis("Mouse ScrollWheel") * heightSpeed;
         targetHeight = Mathf.Clamp(targetHeight, minHeight, maxHeight);
         height = Mathf.Lerp(height, targetHeight, glideSpeed * Time.deltaTime);
     }
-
+	
+	
     void MoveCameraTo(Vector3 position)
     {
         transform.Translate(position * moveSpeed * Time.deltaTime);
