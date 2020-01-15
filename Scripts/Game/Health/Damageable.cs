@@ -6,23 +6,9 @@ using UnityEngine;
 	public class Damageable
 	{
 
-		public float maxHealth;
-		
+		public float maxHealth;		
 		public float startingHealth;
-
-		/// <summary>
-		/// The alignment of the damager
-		/// </summary>
-		public SerializableIAlignmentProvider alignment;
-
-		/// <summary>
-		/// Gets the current health.
-		/// </summary>
 		public float currentHealth { protected set; get; }
-
-		/// <summary>
-		/// Gets the normalised health.
-		/// </summary>
 		public float normalisedHealth
 		{
 			get
@@ -36,49 +22,28 @@ using UnityEngine;
 			}
 		}
 
-		/// <summary>
-		/// Gets the <see cref="IAlignmentProvider"/> of this instance
-		/// </summary>
-		public IAlignmentProvider alignmentProvider
-		{
-			get
-			{
-				return alignment != null ? alignment.GetInterface() : null;
-			}
-		}
-
-		/// <summary>
-		/// Gets whether this instance is dead.
-		/// </summary>
 		public bool isDead
 		{
 			get { return currentHealth <= 0f; }
 		}
 
-		/// <summary>
-		/// Gets whether this instance is at max health.
-		/// </summary>
+
 		public bool isAtMaxHealth
 		{
 			get { return Mathf.Approximately(currentHealth, maxHealth); }
 		}
 
-		// events
 		public event Action reachedMaxHealth;
 
 		public event Action<HealthChangeInfo> damaged, healed, died, healthChanged;
 
-		/// <summary>
-		/// Init this instance
-		/// </summary>
+
 		public virtual void Init()
 		{
 			currentHealth = startingHealth;
 		}
 
-		/// <summary>
-		/// Sets the max health and starting health to the same value
-		/// </summary>
+
 		public void SetMaxHealth(float health)
 		{
 			if (health <= 0)
@@ -88,25 +53,7 @@ using UnityEngine;
 			maxHealth = startingHealth = health;
 		}
 
-		/// <summary>
-		/// Sets the max health and starting health separately
-		/// </summary>
-		public void SetMaxHealth(float health, float startingHealth)
-		{
-			if (health <= 0)
-			{
-				return;
-			}
-			maxHealth = health;
-			this.startingHealth = startingHealth;
-		}
 
-		/// <summary>
-		/// Sets this instance's health directly.
-		/// </summary>
-		/// <param name="health">
-		/// The value to set <see cref="currentHealth"/> to
-		/// </param>
 		public void SetHealth(float health)
 		{
 			var info = new HealthChangeInfo
@@ -124,22 +71,7 @@ using UnityEngine;
 			}
 		}
 
-		/// <summary>
-		/// Use the alignment to see if taking damage is a valid action
-		/// </summary>
-		/// <param name="damage">
-		/// The damage to take
-		/// </param>
-		/// <param name="damageAlignment">
-		/// The alignment of the other combatant
-		/// </param>
-		/// <param name="output">
-		/// The output data if there is damage taken
-		/// </param>
-		/// <returns>
-		/// <value>true if this instance took damage</value>
-		/// <value>false if this instance was already dead, or the alignment did not allow the damage</value>
-		/// </returns>
+
 		public bool TakeDamage(float damage, IAlignmentProvider damageAlignment, out HealthChangeInfo output)
 		{
 			output = new HealthChangeInfo
