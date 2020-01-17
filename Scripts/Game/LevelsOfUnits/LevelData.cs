@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Level", menuName = "Scriptable Object/LevelData")] 
 public class LevelData : ScriptableObject {
 
-	public string typeOfUnit;
+	public TypeOfUnit typeOfUnit;
 	public int maxHealth;
 	[Range(0,1)]
 	public float armor;
@@ -18,9 +18,12 @@ public class LevelData : ScriptableObject {
 	
 	public enum TypeOfUnit
 	{
-		CUBE = 0,
-		SPHERE = 1,
-		PLANE = 2
+		minionWarrior,
+		minionArcher,
+		hero
+		enemyWarrior,
+		enemyArcher,
+		enemyBoss
 	}
 	
 }
