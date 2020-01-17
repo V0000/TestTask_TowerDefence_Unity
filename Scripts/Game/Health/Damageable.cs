@@ -7,7 +7,7 @@ public class Damageable
 {
 
     public float maxHealth;
-    public float currentHealth { protected set; get; }
+    public float currentHealth;
     [Range(0,1)]
     public float armor;
     public float goldForDeath;
@@ -54,11 +54,15 @@ public class Damageable
     }
 
 
-    protected void ChangeHealth(float healthIncrement)
+    protected void AddHealth(float healthIncrement)
     {
-        if (healthIncrement <= 0 || currentHealth + healthIncrement > maxHealth)
+        if (healthIncrement <= 0)
         {
             return;
+        }
+		 if (currentHealth + healthIncrement > maxHealth)
+        {
+            currentHealth = maxHealth;
         }
         currentHealth += healthIncrement;
     }
