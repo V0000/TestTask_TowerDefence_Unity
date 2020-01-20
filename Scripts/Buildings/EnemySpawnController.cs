@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class SpawnController : MonoBehaviour {
+public class SpawnController : MonoBehaviour {
 
     public int level = 1;
     public bool isWarriorDefault = true;
