@@ -15,6 +15,7 @@ public abstract class SpawnController : MonoBehaviour
         builder = GetComponent<UnitBuilder>();       
         spawnLocation = transform.position + Vector3.back;
         selectedUnit = GetUnitForBuild();
+		spawnTime = selectedUnit.trainingTime;
         StartCoroutine(SpawnPerTime(spawnTime));
 
     }
@@ -31,8 +32,8 @@ public abstract class SpawnController : MonoBehaviour
 	
 	IEnumerator SpawnPerTime(float time)
     {
-        while (true)
-        {
+        while (true)        {
+			
             yield return new WaitForSeconds(time);
             if (selectedUnit != null) 
 			{

@@ -4,17 +4,15 @@ using System.Collections;
 public class EnemySpawnController : SpawnController 
 {
 
-    public int level = 1;
-    public bool isWarriorDefault = true;
-    private LevelData selectedUnit;    
-    private int maxLevel;    
+    private LevelData selectedUnit;      
     private TypesOfUnits typesOfUnits;
+	private WaveScheduler waveScheduler;
     private UnitBuilder builder;
     private Vector3 spawnLocation;
     private float spawnTimer;
 
 
-    void Start () 
+    override void Start () 
 	{
 		
 

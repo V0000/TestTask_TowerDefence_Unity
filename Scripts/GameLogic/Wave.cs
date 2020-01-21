@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewWave", menuName = "Scriptable Object/WaveData")] 
+[Serializable]
 public class Wave
 {
 	public WaveData waveData;
