@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpawnController : MonoBehaviour {
+public class EnemySpawnController : SpawnController 
+{
 
     public int level = 1;
     public bool isWarriorDefault = true;
@@ -13,43 +14,20 @@ public class SpawnController : MonoBehaviour {
     private float spawnTimer;
 
 
-    // Use this for initialization
-    void Start () {
-        builder = GetComponent<UnitBuilder>();       
-        spawnLocation = transform.position + Vector3.back;
-        selectedUnit = GetUnitForBuild();
-        maxLevel = typesOfUnits.minionWarriors.Length;
-        spawnTimer = selectedUnit.trainingTime;
-        StartCoroutine(SpawnPerTime());
+    void Start () 
+	{
+		
+
 
     }
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
-
-    IEnumerator SpawnPerTime()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(spawnTimer);
-            CreateUnit();
-        }
-    }
-
-    public void CreateUnit()
-    {
-        builder.NewUnit(selectedUnit, spawnLocation);
-    }
-
-    public LevelData GetUnitForBuild()
+    override public LevelData GetUnitForBuild()
     {
         LevelData levelData;
         if (isWarriorDefault)
         {
-            levelData = typesOfUnits.minionWarriors[level-1]; //level start with 1, but array with 0
+            levelData = typesOfUnits.minionWarriors[level-1]; 
          }
 
         else

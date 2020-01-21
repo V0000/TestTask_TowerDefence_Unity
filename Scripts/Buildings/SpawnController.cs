@@ -1,42 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class SpawnController : MonoBehaviour {
-
-    public int level = 1;
-    public bool isWarriorDefault = true;
-    private LevelData selectedUnit;    
-    private int maxLevel;    
+public abstract class SpawnController : MonoBehaviour 
+{
+    public LevelData defaultUnit;
+	private LevelData selectedUnit;	
     private TypesOfUnits typesOfUnits;
     private UnitBuilder builder;
     private Vector3 spawnLocation;
-    private float spawnTimer;
+    private float spawnTime;
 
-
-    // Use this for initialization
-    void Start () {
+    void Start () 
+	{
         builder = GetComponent<UnitBuilder>();       
         spawnLocation = transform.position + Vector3.back;
         selectedUnit = GetUnitForBuild();
-        maxLevel = typesOfUnits.minionWarriors.Length;
-        spawnTimer = selectedUnit.trainingTime;
-        StartCoroutine(SpawnPerTime());
+        StartCoroutine(SpawnPerTime(spawnTime));
 
-    }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-
-    IEnumerator SpawnPerTime()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(spawnTimer);
-            CreateUnit();
-        }
     }
 
     public void CreateUnit()
@@ -45,17 +25,19 @@ public abstract class SpawnController : MonoBehaviour {
     }
 
     public LevelData GetUnitForBuild()
+    {        
+        return defaultUnit;
+    }
+	
+	IEnumerator SpawnPerTime(float time)
     {
-        LevelData levelData;
-        if (isWarriorDefault)
+        while (true)
         {
-            levelData = typesOfUnits.minionWarriors[level-1]; //level start with 1, but array with 0
-         }
-
-        else
-        {
-            levelData = typesOfUnits.minionArchers[level-1];
+            yield return new WaitForSeconds(time);
+            if (selectedUnit != null) 
+			{
+				CreateUnit();
+			}
         }
-        return levelData;
     }
 }
