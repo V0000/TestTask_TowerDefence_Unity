@@ -1,10 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class TimerOnScreen : MonoBehaviour
 {
 	public Text scoreText;
-	public bool isVisible 
+    public bool isVisible;
 
 
     void Start()

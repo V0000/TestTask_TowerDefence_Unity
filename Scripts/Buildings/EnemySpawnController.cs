@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemySpawnController : SpawnController 
 {
-	private WaveScheduler waveScheduler;
+	public WaveScheduler waveScheduler;
 	private List<Enemy> listOfEnemies;
 	private int numInList = 0;
 
-	override void Start () 
-	{        
-		base.Start ()
-		listOfEnemies = waveScheduler.GetListOfEnemies();        
+	override protected void Start () 
+	{
+        base.Start();
+		listOfEnemies = waveScheduler.GetListOfEnemies();
+        Debug.Log("In listOfEnemies:" + listOfEnemies.Count );
 		NextEnemy();
 		StartWave();
 		
@@ -25,13 +27,14 @@ public class EnemySpawnController : SpawnController
     {
 		selectedUnit = listOfEnemies[numInList].unitData;
 		spawnTime = listOfEnemies[numInList].timeToNextSpawn;
-		if (numInList<listOfEnemies.Count())
+		if (numInList<listOfEnemies.Count)
 		{
 			numInList++;
 		}
 		else 
 		{
 			StopCoroutine(SpawnPerTime(spawnTime));
+            Debug.Log("Coroutine is stopped!");
 		}
 		
 		

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class UnitBuilder : MonoBehaviour
 {
-	public GameObject parent;
-    public UnitData data1;
+	public GameObject parent;    
 
     private GameObject unit;
     private Vector3 spawnLocation;

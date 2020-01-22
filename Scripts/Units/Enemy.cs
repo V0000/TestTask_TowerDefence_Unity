@@ -4,12 +4,12 @@ using System;
 public class Enemy
 {
 	public UnitData unitData;
-    public int countOfUnits;
-	public int timeToNextSpawn;
+    public float countOfUnits;
+	public float timeToNextSpawn;
 	
-	public Enemy(LevelData enemy,int count, int time)
+	public Enemy(UnitData enemy,int count, int time)
 	{
-		levelData = enemy;
+        unitData = enemy;
 		countOfUnits = count;
 		timeToNextSpawn = time;
 	}

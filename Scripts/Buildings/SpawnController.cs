@@ -5,7 +5,7 @@ public abstract class SpawnController : MonoBehaviour
 {
     //ublic UnitData defaultUnit;
     protected UnitData selectedUnit;
-    protected TypesOfUnits typesOfUnits;
+    public TypesOfUnits typesOfUnits;
     private UnitBuilder builder;
     protected Vector3 spawnLocation;
     protected float spawnTime;
@@ -14,9 +14,10 @@ public abstract class SpawnController : MonoBehaviour
 	{
         builder = GetComponent<UnitBuilder>();       
         spawnLocation = transform.position + Vector3.back;
+        spawnLocation.y = 2.5f;
         selectedUnit = GetUnitForBuild();
-		spawnTime = selectedUnit.trainingTime;
-        //StartCoroutine(SpawnPerTime(spawnTime));
+		//spawnTime = selectedUnit.trainingTime;
+
 
     }
 
@@ -30,7 +31,7 @@ public abstract class SpawnController : MonoBehaviour
         return selectedUnit;
     }
 	
-	protected IEnumerator SpawnPerTime(float time)
+	protected virtual IEnumerator SpawnPerTime(float time)
     {
         while (true)        {
 			
