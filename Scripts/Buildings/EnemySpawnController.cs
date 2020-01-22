@@ -4,18 +4,14 @@ using System.Collections;
 public class EnemySpawnController : SpawnController 
 {
 
-    private LevelData selectedUnit;      
-    private TypesOfUnits typesOfUnits;
 	private WaveScheduler waveScheduler;
-    private UnitBuilder builder;
-    private Vector3 spawnLocation;
-    private float spawnTimer;
+	private List<Enemy> listOfEnemies;
 
-
-    override void Start () 
-	{
-		
-
+    override void Start () {
+        
+		base.Start ()
+		listOfEnemies = waveScheduler.GetListOfEnemies();
+        
 
     }
 	
