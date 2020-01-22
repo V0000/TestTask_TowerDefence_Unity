@@ -10,13 +10,13 @@ public abstract class SpawnController : MonoBehaviour
     protected Vector3 spawnLocation;
     protected float spawnTime;
 
-    public virtual void Start () 
+    protected virtual void Start () 
 	{
         builder = GetComponent<UnitBuilder>();       
         spawnLocation = transform.position + Vector3.back;
         selectedUnit = GetUnitForBuild();
 		spawnTime = selectedUnit.trainingTime;
-        StartCoroutine(SpawnPerTime(spawnTime));
+        //StartCoroutine(SpawnPerTime(spawnTime));
 
     }
 
@@ -25,12 +25,12 @@ public abstract class SpawnController : MonoBehaviour
         builder.NewUnit(selectedUnit, spawnLocation);
     }
 
-    public virtual UnitData GetUnitForBuild()
+    protected virtual UnitData GetUnitForBuild()
     {        
         return selectedUnit;
     }
 	
-	IEnumerator SpawnPerTime(float time)
+	protected IEnumerator SpawnPerTime(float time)
     {
         while (true)        {
 			

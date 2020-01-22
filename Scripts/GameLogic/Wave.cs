@@ -4,6 +4,6 @@ using System;
 public class Wave
 {
 	public WaveData waveData;
-	public int timeToNextWaveInSeconds;
+	public int timeBeforeThisWaveInSeconds;
 }
 

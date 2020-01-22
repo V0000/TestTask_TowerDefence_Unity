@@ -12,7 +12,7 @@ public class BarracksSpawnController : SpawnController
 
         base.Start();
        // maxLevel = typesOfUnits.minionWarriors.Length;        
-
+		StartCoroutine(SpawnPerTime(spawnTime));
     }
 	
 	
