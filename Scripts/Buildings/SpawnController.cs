@@ -3,14 +3,14 @@ using System.Collections;
 
 public abstract class SpawnController : MonoBehaviour 
 {
-    public LevelData defaultUnit;
-	private LevelData selectedUnit;	
-    private TypesOfUnits typesOfUnits;
+    //ublic UnitData defaultUnit;
+    protected UnitData selectedUnit;
+    protected TypesOfUnits typesOfUnits;
     private UnitBuilder builder;
-    private Vector3 spawnLocation;
-    private float spawnTime;
+    protected Vector3 spawnLocation;
+    protected float spawnTime;
 
-    void Start () 
+    public virtual void Start () 
 	{
         builder = GetComponent<UnitBuilder>();       
         spawnLocation = transform.position + Vector3.back;
@@ -25,9 +25,9 @@ public abstract class SpawnController : MonoBehaviour
         builder.NewUnit(selectedUnit, spawnLocation);
     }
 
-    public LevelData GetUnitForBuild()
+    public virtual UnitData GetUnitForBuild()
     {        
-        return defaultUnit;
+        return selectedUnit;
     }
 	
 	IEnumerator SpawnPerTime(float time)

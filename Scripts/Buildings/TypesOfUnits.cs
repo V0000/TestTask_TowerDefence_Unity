@@ -6,12 +6,12 @@ public class
     TypesOfUnits : ScriptableObject
 {
 
-    public LevelData[] minionWarriors;
-    public LevelData[] minionArchers;
-    public LevelData[] hero;
-    public LevelData[] enemyWarriors;
-    public LevelData[] enemyArchers;
-    public LevelData[] boss;
+    public UnitData[] minionWarriors;
+    public UnitData[] minionArchers;
+    public UnitData[] hero;
+    public UnitData[] enemyWarriors;
+    public UnitData[] enemyArchers;
+    public UnitData[] boss;
 
 
 }
