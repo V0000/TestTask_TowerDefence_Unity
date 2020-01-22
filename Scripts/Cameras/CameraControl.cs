@@ -56,10 +56,10 @@ public class CameraControl : MonoBehaviour
             targetDirection.z = 0;
 
 
-            if (false)//trackingObject.CharacterController.IsTarget())
-            {
-                StopTracking();
-            }
+            //if (false)//trackingObject.CharacterController.IsTarget())
+            //{
+                //StopTracking();
+            //}
         }
         else
         {

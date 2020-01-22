@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnitBuilder : MonoBehaviour
 {
 	public GameObject parent;
-    public LevelData data1;
+    public UnitData data1;
 
     private GameObject unit;
     private Vector3 spawnLocation;
@@ -15,14 +15,14 @@ public class UnitBuilder : MonoBehaviour
     /// </summary>
     /// <param name="data">Type of unit to instantiate</param>
     /// <param name="spawnLocation">Where you will spawn unit</param>
-    public void NewUnit(LevelData data, Vector3 spawnLocation)
+    public void NewUnit(UnitData data, Vector3 spawnLocation)
     {
         BuildUnit(data);
         InstantiateUnit(unit, spawnLocation);
 
     }
 
-    void BuildUnit(LevelData data)
+    void BuildUnit(UnitData data)
 	{	
 		unit = data.prefab;
         SetMaterial(unit, data.material);

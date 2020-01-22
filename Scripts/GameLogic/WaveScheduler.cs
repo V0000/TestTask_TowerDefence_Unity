@@ -1,9 +1,14 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewWave", menuName = "Scriptable Object/WaveData")] 
+[CreateAssetMenu(fileName = "NewWaveScheduler", menuName = "Scriptable Object/WaveScheduler")] 
 public class WaveScheduler : ScriptableObject 
 {
-	public List<Wave> scheduler = new List<SubList>();
+	public List<Wave> schedule = new List<Wave>();
+
+    public void SheduleToList()
+    {
+    }
+
 }
 

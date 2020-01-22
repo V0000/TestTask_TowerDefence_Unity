@@ -6,21 +6,19 @@ public class BarracksSpawnController : SpawnController
 
     public int level = 1;
     public bool isWarriorDefault = true;   
-    private int maxLevel;
+    //private int maxLevel;
 
-    override void Start () {
-        
-		base.Start ()
-        maxLevel = typesOfUnits.minionWarriors.Length;
-        spawnTimer = selectedUnit.trainingTime;
-        
+    public override void Start () {
+
+        base.Start();
+       // maxLevel = typesOfUnits.minionWarriors.Length;        
 
     }
 	
 	
-    override public LevelData GetUnitForBuild()
+    override public UnitData GetUnitForBuild()
     {
-        LevelData levelData;
+        UnitData levelData;
         if (isWarriorDefault)
         {
             levelData = typesOfUnits.minionWarriors[level-1]; //level start with 1, but array with 0

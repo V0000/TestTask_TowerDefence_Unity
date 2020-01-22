@@ -1,8 +1,9 @@
-using UnityEngine;
+using System;
 
 [Serializable]
 public class Enemy
 {
-	public LevelData levelData;
+	public UnitData levelData;
+    public int countOfUnits;
 	public int timeToNextSpawn;
 }
