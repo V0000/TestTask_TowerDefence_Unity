@@ -12,31 +12,23 @@ public class EnemySpawnController : SpawnController
 	{
         base.Start();
 		listOfEnemies = waveScheduler.GetListOfEnemies();
-        Debug.Log("In listOfEnemies:" + listOfEnemies.Count );
-		NextEnemy();
-		StartWave();
+		StartNextEnemy();
 		
     }
 	
-	public void StartWave()
-    {
-		StartCoroutine(SpawnPerTime(spawnTime));
-	}
+
 	
-	 public void NextEnemy()
+	 public void StartNextEnemy()
     {
-		selectedUnit = listOfEnemies[numInList].unitData;
-		spawnTime = listOfEnemies[numInList].timeToNextSpawn;
-		if (numInList<listOfEnemies.Count)
+
+        
+        if (numInList<listOfEnemies.Count)
 		{
-			numInList++;
-		}
-		else 
-		{
-			StopCoroutine(SpawnPerTime(spawnTime));
-            Debug.Log("Coroutine is stopped!");
-		}
-		
+            selectedUnit = listOfEnemies[numInList].unitData;
+            spawnTime = listOfEnemies[numInList].timeToNextSpawn;
+            numInList++;
+            StartCoroutine(SpawnPerTime(spawnTime));
+        }	
 		
 	}
 	
@@ -48,17 +40,13 @@ public class EnemySpawnController : SpawnController
 	
 	
 	override protected IEnumerator SpawnPerTime(float time)
-    {
-        while (true)        {
-			
+    { 		
             yield return new WaitForSeconds(time);
             if (selectedUnit != null) 
 			{
 				CreateUnit();
 			}
-			NextEnemy();
-			yield return new WaitForEndOfFrame();
-        }
+			StartNextEnemy();
     }
     
 }
