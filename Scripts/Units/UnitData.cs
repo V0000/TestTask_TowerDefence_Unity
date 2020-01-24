@@ -4,6 +4,7 @@ using UnityEngine;
 public class UnitData : ScriptableObject
 {
     [Header("Units Settings")]
+	public bool isEnemy;
     public TypeOfUnit typeOfUnit;
     public int maxHealth;
     [Range(0, 1)]

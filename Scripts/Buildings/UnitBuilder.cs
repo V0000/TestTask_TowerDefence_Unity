@@ -18,6 +18,7 @@ public class UnitBuilder : MonoBehaviour
     {
         BuildUnit(data);
         InstantiateUnit(unit, spawnLocation);
+		AddUnitInRegistry(data, unit)
 
     }
 
@@ -31,9 +32,9 @@ public class UnitBuilder : MonoBehaviour
 	
 	void InstantiateUnit(GameObject unit, Vector3 spawnLocation)
 	{
-		var SpawnedUnit = Instantiate(unit);
+		GameObject SpawnedUnit = Instantiate(unit);
 		SpawnedUnit.transform.parent = parent.transform; 
-		SpawnedUnit.transform.localPosition = spawnLocation;
+		SpawnedUnit.transform.localPosition = spawnLocation;		
 	}
 
     void SetMaterial(GameObject unit, Material material)
@@ -41,5 +42,17 @@ public class UnitBuilder : MonoBehaviour
         unit.GetComponent<Renderer>().material = material;
         unit.gameObject.transform.GetChild(0).GetComponent<Renderer>().material = material;
     }
+	
+	void AddUnitInRegistry(UnitData data,GameObject unit)
+	{
+		if (data.isEnemy)
+		{
+			UnitRegistry.enemies.Add(unit);
+		}
+		else
+		{
+			UnitRegistry.minions.Add(unit);
+		}
+	}
 
 }
