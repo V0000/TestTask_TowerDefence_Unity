@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BarracksSpawnController : SpawnController 
 {
-
+    public TypesOfUnits typesOfUnits;
     public int level = 1;
     public bool isWarriorDefault = true;   
     //private int maxLevel;

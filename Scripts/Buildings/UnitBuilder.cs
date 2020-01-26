@@ -5,9 +5,10 @@ using UnityEngine;
 public class UnitBuilder : MonoBehaviour
 {
 	public GameObject parent;    
-
     private GameObject unit;
     private Vector3 spawnLocation;
+    private NavMeshAgent navMeshAgent;
+    private UnitBehaviour unitBehaviour;
 
     /// <summary>
     /// Spawn unit on specific coordinates
@@ -18,7 +19,7 @@ public class UnitBuilder : MonoBehaviour
     {
         BuildUnit(data);
         InstantiateUnit(unit, spawnLocation);
-		AddUnitInRegistry(data, unit)
+        AddUnitInRegistry(data, unit);
 
     }
 
@@ -26,6 +27,13 @@ public class UnitBuilder : MonoBehaviour
 	{	
 		unit = data.prefab;
         SetMaterial(unit, data.material);
+
+        navMeshAgent = unit.GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = data.speed;
+        navMeshAgent.stoppingDistance = data.attackDistance;
+
+        unitBehaviour = unit.GetComponent<UnitBehaviour>();
+        unitBehaviour.isEnemy = data.isEnemy;
         
     }
 	
@@ -47,11 +55,11 @@ public class UnitBuilder : MonoBehaviour
 	{
 		if (data.isEnemy)
 		{
-			UnitRegistry.enemies.Add(unit);
+			ObjectRegistry.enemies.Add(unit);
 		}
 		else
 		{
-			UnitRegistry.minions.Add(unit);
+			ObjectRegistry.minions.Add(unit);
 		}
 	}
 

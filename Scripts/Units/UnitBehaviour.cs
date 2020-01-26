@@ -3,28 +3,40 @@ using System.Collections;
 
 public class UnitBehaviour : MonoBehaviour 
 {
-
-	private bool haveTarget;
-	private NavMeshAgent[] navAgents;
-    public Transform target;
+    [HideInInspector]
+    public bool isEnemy;
+    public Transform fountain;
+    private GameObject target;
+    private NavMeshAgent agent;
+    
 	
 	void Start () 
 	{
-		haveTarget = false;
-		navAgents = FindObjectsOfType(typeof(NavMeshAgent)) as NavMeshAgent[];
-	}
+		agent = GetComponent<NavMeshAgent>();
+    }
 	
-	// Update is called once per frame
+
 	void Update () 
 	{
-        transform.Translate(Vector3.right*Time.deltaTime*2);
-	}
-	
-	private void UpdateTargets ( Vector3 targetPosition )
+        UpdateTargets();
+        agent.destination = target.transform.position;
+    }
+
+    void OnDrawGizmos()
     {
-      foreach(NavMeshAgent agent in navAgents) 
-      {
-        agent.destination = targetPosition;
-      }
+        Debug.DrawRay(transform.position, target.transform.position);
+    }
+
+
+    private void UpdateTargets ()
+    {
+        if (ObjectRegistry.TargetIsExist(isEnemy))
+        {
+            target = ObjectRegistry.fountain;            
+        }
+        else
+        {
+            target = ObjectRegistry.GetNearestTarget(transform, isEnemy);
+        }
     }
 }

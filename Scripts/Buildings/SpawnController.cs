@@ -4,8 +4,7 @@ using System.Collections;
 public abstract class SpawnController : MonoBehaviour 
 {
     //ublic UnitData defaultUnit;
-    protected UnitData selectedUnit;
-    public TypesOfUnits typesOfUnits;
+    protected UnitData selectedUnit;    
     private UnitBuilder builder;
     protected Vector3 spawnLocation;
     protected float spawnTime;
