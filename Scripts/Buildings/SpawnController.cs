@@ -1,48 +1,45 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Units.Data;
 
 namespace Buildings
 {
-	public abstract class SpawnController : MonoBehaviour 
-	{
-		//ublic UnitData defaultUnit;
-		protected UnitData selectedUnit;    
-		private UnitBuilder builder;
-		protected Vector3 spawnLocation;
-		protected float spawnTime;
+    public abstract class SpawnController : MonoBehaviour
+    {
+        protected UnitData selectedUnit;
+        private UnitBuilder builder;
+        protected Vector3 spawnLocation;
+        protected float spawnTime;
 
-		protected virtual void Start () 
-		{
-			builder = GetComponent<UnitBuilder>();       
-			spawnLocation = transform.position + Vector3.back;
-			spawnLocation.y = 2.5f;
-			selectedUnit = GetUnitForBuild();
-			//spawnTime = selectedUnit.trainingTime;
+        protected virtual void Start()
+        {
+            builder = GetComponent<UnitBuilder>();
+            spawnLocation = transform.position + Vector3.back;
+            spawnLocation.y = 2.5f;
+            selectedUnit = GetUnitForBuild();
+        }
 
+        public void CreateUnit()
+        {
+            builder.NewUnit(selectedUnit, spawnLocation);
+        }
 
-		}
+        protected virtual UnitData GetUnitForBuild()
+        {
+            return selectedUnit;
+        }
 
-		public void CreateUnit()
-		{
-			builder.NewUnit(selectedUnit, spawnLocation);
-		}
+        protected virtual IEnumerator SpawnPerTime(float time)
+        {
+            while (true)
+            {
 
-		protected virtual UnitData GetUnitForBuild()
-		{        
-			return selectedUnit;
-		}
-		
-		protected virtual IEnumerator SpawnPerTime(float time)
-		{
-			while (true)        
-			{
-				
-				yield return new WaitForSeconds(time);
-				if (selectedUnit != null) 
-				{
-					CreateUnit();
-				}
-			}
-		}
-	}
+                yield return new WaitForSeconds(time);
+                if (selectedUnit != null)
+                {
+                    CreateUnit();
+                }
+            }
+        }
+    }
 }

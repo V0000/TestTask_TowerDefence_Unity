@@ -13,24 +13,24 @@ namespace Utilities
         /// <summary>
         /// The static reference to the instance
         /// </summary>
-        public static T instance { get; protected set; }
+        public static T Instance { get; protected set; }
 
-        public static bool instanceExists
+        public static bool InstanceExists
         {
-            get { return instance != null; }
+            get { return Instance != null; }
         }
         /// <summary>
         /// Associate singleton with instance
         /// </summary>
         protected virtual void Awake()
         {
-            if (instanceExists)
+            if (InstanceExists)
             {
                 Destroy(gameObject);
             }
             else
             {
-                instance = (T) this;
+                Instance = (T)this;
             }
         }
         /// <summary>
@@ -38,9 +38,9 @@ namespace Utilities
         /// </summary>
         protected virtual void OnDestroy()
         {
-            if (instance == this)
+            if (Instance == this)
             {
-                instance = null;
+                Instance = null;
             }
         }
     }
