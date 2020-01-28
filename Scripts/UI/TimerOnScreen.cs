@@ -2,24 +2,27 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-public class TimerOnScreen : MonoBehaviour
+namespace UI
 {
-	public Text scoreText;
-    public bool isVisible;
+	public class TimerOnScreen : MonoBehaviour
+	{
+		public Text scoreText;
+		public bool isVisible;
 
 
-    void Start()
-    {
-		InvokeRepeating("RunTimer", 1, 1);
-    }
+		void Start()
+		{
+			InvokeRepeating("RunTimer", 1, 1);
+		}
 
-    void Update()
-    {
+		void Update()
+		{
 
-    }
-	
-		void RunTimer() {
-		scoreText.text = (int.Parse(scoreText.text) - 1).ToString();
+		}
+		
+			void RunTimer() {
+			scoreText.text = (int.Parse(scoreText.text) - 1).ToString();
+		}
+
 	}
-
 }

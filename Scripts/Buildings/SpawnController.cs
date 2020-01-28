@@ -1,44 +1,48 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class SpawnController : MonoBehaviour 
+namespace Buildings
 {
-    //ublic UnitData defaultUnit;
-    protected UnitData selectedUnit;    
-    private UnitBuilder builder;
-    protected Vector3 spawnLocation;
-    protected float spawnTime;
-
-    protected virtual void Start () 
+	public abstract class SpawnController : MonoBehaviour 
 	{
-        builder = GetComponent<UnitBuilder>();       
-        spawnLocation = transform.position + Vector3.back;
-        spawnLocation.y = 2.5f;
-        selectedUnit = GetUnitForBuild();
-		//spawnTime = selectedUnit.trainingTime;
+		//ublic UnitData defaultUnit;
+		protected UnitData selectedUnit;    
+		private UnitBuilder builder;
+		protected Vector3 spawnLocation;
+		protected float spawnTime;
+
+		protected virtual void Start () 
+		{
+			builder = GetComponent<UnitBuilder>();       
+			spawnLocation = transform.position + Vector3.back;
+			spawnLocation.y = 2.5f;
+			selectedUnit = GetUnitForBuild();
+			//spawnTime = selectedUnit.trainingTime;
 
 
-    }
+		}
 
-    public void CreateUnit()
-    {
-        builder.NewUnit(selectedUnit, spawnLocation);
-    }
+		public void CreateUnit()
+		{
+			builder.NewUnit(selectedUnit, spawnLocation);
+		}
 
-    protected virtual UnitData GetUnitForBuild()
-    {        
-        return selectedUnit;
-    }
-	
-	protected virtual IEnumerator SpawnPerTime(float time)
-    {
-        while (true)        {
-			
-            yield return new WaitForSeconds(time);
-            if (selectedUnit != null) 
+		protected virtual UnitData GetUnitForBuild()
+		{        
+			return selectedUnit;
+		}
+		
+		protected virtual IEnumerator SpawnPerTime(float time)
+		{
+			while (true)        
 			{
-				CreateUnit();
+				
+				yield return new WaitForSeconds(time);
+				if (selectedUnit != null) 
+				{
+					CreateUnit();
+				}
 			}
-        }
-    }
+		}
+	}
 }

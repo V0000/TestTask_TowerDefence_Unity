@@ -2,51 +2,54 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class EnemySpawnController : SpawnController 
+namespace Buildings
 {
-	public WaveScheduler waveScheduler;
-	private List<Enemy> listOfEnemies;
-	private int numInList = 0;
-
-	override protected void Start () 
+	public class EnemySpawnController : SpawnController 
 	{
-        base.Start();
-		listOfEnemies = waveScheduler.GetListOfEnemies();
-		StartNextEnemy();
-		
-    }
-	
+		public WaveScheduler waveScheduler;
+		private List<Enemy> listOfEnemies;
+		private int numInList = 0;
 
-	
-	 public void StartNextEnemy()
-    {
-
-        
-        if (numInList<listOfEnemies.Count)
+		override protected void Start () 
 		{
-            selectedUnit = listOfEnemies[numInList].unitData;
-            spawnTime = listOfEnemies[numInList].timeToNextSpawn;
-            numInList++;
-            StartCoroutine(SpawnPerTime(spawnTime));
-        }	
+			base.Start();
+			listOfEnemies = waveScheduler.GetListOfEnemies();
+			StartNextEnemy();
+			
+		}
+		
+
+		
+		 public void StartNextEnemy()
+		{
+
+			
+			if (numInList<listOfEnemies.Count)
+			{
+				selectedUnit = listOfEnemies[numInList].unitData;
+				spawnTime = listOfEnemies[numInList].timeToNextSpawn;
+				numInList++;
+				StartCoroutine(SpawnPerTime(spawnTime));
+			}	
+			
+		}
+		
+		override protected UnitData GetUnitForBuild()
+		{
+			
+			return selectedUnit;
+		}
+		
+		
+		override protected IEnumerator SpawnPerTime(float time)
+		{ 		
+				yield return new WaitForSeconds(time);
+				if (selectedUnit != null) 
+				{
+					CreateUnit();
+				}
+				StartNextEnemy();
+		}
 		
 	}
-	
-    override protected UnitData GetUnitForBuild()
-    {
-        
-        return selectedUnit;
-    }
-	
-	
-	override protected IEnumerator SpawnPerTime(float time)
-    { 		
-            yield return new WaitForSeconds(time);
-            if (selectedUnit != null) 
-			{
-				CreateUnit();
-			}
-			StartNextEnemy();
-    }
-    
 }

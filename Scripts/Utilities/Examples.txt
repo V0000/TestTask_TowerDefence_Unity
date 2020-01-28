@@ -1,0 +1,51 @@
+#region Public
+#endregion
+
+
+//==============
+//scroll moment
+#if UNITY_EDITOR || UNITY_WEBPLAYER || UNITY_STANDALONE
+#else
+#endif
+
+Debug.Log (fbx_folder);
+Debug.Log("Look on" + _currentEnemy.name, gameObject);
+Debug.DrawLine(myTransform.position, _currentEnemy.myTransform.position);
+Debug.Break();
+
+void OnDrawGizmos()
+{
+}
+
+        /// <summary>
+        /// Associate singleton with instance
+        /// </summary>
+		
+		/// <summary>
+		/// Takes the damage and also provides a position for the damage being dealt
+		/// </summary>
+		/// <param name="damageValue">Damage value.</param>
+		/// <param name="damagePoint">Damage point.</param>
+		/// <param name="alignment">Alignment value</param>
+	
+	
+   if(component == null)
+   {
+      Debug.LogError("Expected to find component of type "
+         + typeof(T) + " but found none", obj);
+   }
+   
+   [RequireComponent(System.Type type)]
+   [SerializeField]
+   [Range(float min, float max)]
+   [Header(string title)]
+   [Space]
+   [Tooltip(string tip)]
+   [HiddenInInspector]
+   
+   
+TODO:
+-timer
+-FPS
+   
+ 

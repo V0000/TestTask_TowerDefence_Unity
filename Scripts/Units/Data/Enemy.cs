@@ -1,6 +1,6 @@
 using System;
 
-namespace Waves
+namespace Units.Data
 {
 	[Serializable]
 	public class Enemy
