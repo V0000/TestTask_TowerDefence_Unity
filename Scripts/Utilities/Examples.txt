@@ -36,6 +36,7 @@ void OnDrawGizmos()
    }
    
    [RequireComponent(System.Type type)]
+   [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
    [SerializeField]
    [Range(float min, float max)]
    [Header(string title)]

@@ -9,6 +9,7 @@ namespace Units.Attack
 		private float attack;
 		private float attackSpeed;
 		private float attackDistance;
+		private HealthController healthController;
 		
 #region Setters and getters
 
@@ -62,8 +63,8 @@ namespace Units.Attack
 		
 
 		public void StartAttack(GameObject target)
-		{
-			HealthController
+		{			
+			healthController = target.GetComponent<HealthController>();
 			StartCoroutine(AttackPerTime());
 		}	
 

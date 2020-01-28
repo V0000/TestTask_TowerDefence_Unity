@@ -22,7 +22,7 @@ namespace Buildings
 		{
 			BuildUnit(data);
 			InstantiateUnit(unit, spawnLocation);
-			AddUnitInRegistry(data, unit);
+			ObjectRegistry.AddUnit(unit, data.isEnemy);
 
 		}
 		
@@ -75,17 +75,5 @@ namespace Buildings
 			unit.gameObject.transform.GetChild(0).GetComponent<Renderer>().material = material;
 		}
 		
-		void AddUnitInRegistry(UnitData data,GameObject unit)
-		{
-			if (data.isEnemy)
-			{
-				ObjectRegistry.enemies.Add(unit);
-			}
-			else
-			{
-				ObjectRegistry.minions.Add(unit);
-			}
-		}
-
 	}
 }

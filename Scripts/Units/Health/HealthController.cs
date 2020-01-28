@@ -7,8 +7,7 @@ namespace Units.Health
 	public class HealthController : MonoBehaviour
 	{
 		private float maxHealth;
-		private float currentHealth;
-		[Range(0,1)]
+		private float currentHealth;		
 		private float armor;
 		private float goldForDeath;
 		private float xpForDeath;
