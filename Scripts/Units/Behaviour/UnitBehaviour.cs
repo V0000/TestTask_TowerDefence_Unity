@@ -34,6 +34,7 @@ namespace Units
 		
 		void OnDestroy()
         {
+			//Reward for killing enemy
             if (isEnemy)
 			{
 				ObjectRegistry.gold += healthController.goldForDeath;

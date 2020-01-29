@@ -15,8 +15,9 @@ namespace Cameras
         public float cameraAngle = 60;
         public float maxHeight = 40;
         public float minHeight = 5;
+		public bool useEdgeBorderForMove = false;
         [Tooltip("Distance from screen edge. Used for mouse movement")]
-        public float ScreenEdgeBorderThickness = 20;
+        public float screenEdgeBorderThickness = 20;
 
         [Header("Input Settings")]
         public KeyCode rotationLeft = KeyCode.Q;
@@ -67,23 +68,11 @@ namespace Cameras
             {
                 targetDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
 
+				if(useEdgeBorderForMove)
+				{
+					MoveUsingEdgeOfScreen()
+				}
 
-                if (Input.mousePosition.x <= ScreenEdgeBorderThickness)
-                {
-                    targetDirection += Vector3.left;
-                }
-                if (Input.mousePosition.x >= Screen.width - ScreenEdgeBorderThickness)
-                {
-                    targetDirection += Vector3.right;
-                }
-                if (Input.mousePosition.y <= ScreenEdgeBorderThickness)
-                {
-                    targetDirection -= Vector3.forward;
-                }
-                if (Input.mousePosition.y >= Screen.height - ScreenEdgeBorderThickness)
-                {
-                    targetDirection += Vector3.forward;
-                }
             }
 
         }
@@ -113,6 +102,26 @@ namespace Cameras
         void StopTracking()
         {
             trackingObject = null;
+        }
+		
+		void MoveUsingEdgeOfScreen()
+        {
+                if (Input.mousePosition.x <= screenEdgeBorderThickness)
+                {
+                    targetDirection += Vector3.left;
+                }
+                if (Input.mousePosition.x >= Screen.width - screenEdgeBorderThickness)
+                {
+                    targetDirection += Vector3.right;
+                }
+                if (Input.mousePosition.y <= screenEdgeBorderThickness)
+                {
+                    targetDirection -= Vector3.forward;
+                }
+                if (Input.mousePosition.y >= Screen.height - screenEdgeBorderThickness)
+                {
+                    targetDirection += Vector3.forward;
+                }          
         }
     }
 }
