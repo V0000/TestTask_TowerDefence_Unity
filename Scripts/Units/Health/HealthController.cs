@@ -1,24 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities;
 
 namespace Units.Health
 {
     public class HealthController : MonoBehaviour
     {
         private float maxHealth;
-        private float currentHealth;
+        private float currentHealth = 1;
         private float armor;
-        private float goldForDeath;
-        private float xpForDeath;
-		private GameObject deadUnit;
+        private int goldForDeath;
+        private int xpForDeath;
+        [HideInInspector]
+		public GameObject deadUnit;
+        [HideInInspector]
+        public GameObject parentForDead;
 
-		void OnDestroy()
-        {
-            GameObject spawnedUnit = Instantiate(healthController.deadUnit);
-            //spawnedUnit.transform.parent = parent.transform;
-            spawnedUnit.transform.localPosition = transform.localPosition;
-        }
+
+
 		
         #region Setters and getters
 
@@ -64,13 +64,14 @@ namespace Units.Health
             {
                 if (value > 0)
                 {
+                    Debug.Log(value);
                     currentHealth = value;
                 }
             }
 
         }
 
-        public float Gold
+        public int Gold
         {
             get
             {
@@ -85,7 +86,7 @@ namespace Units.Health
             }
         }
 
-        public float Hp
+        public int Xp
         {
             get
             {
@@ -100,17 +101,7 @@ namespace Units.Health
             }
         }
 		
-		public float DeadUser
-        {
-            get
-            {
-                return deadUnit;
-            }
-            set
-            {
-                deadUnit = value;
-            }
-        }
+
         #endregion
 
 
@@ -146,16 +137,21 @@ namespace Units.Health
 
         public bool IsDead
         {
-            get { return currentHealth <= 0f; }
-        }
-		
-		void CheckDeath()
-        {
-            if (IsDead)
+            get 
             {
-                ObjectRegistry.RemoveUnit(gameObject, isEnemy);
-				Destroy(gameObject);
+                Debug.Log(currentHealth);
+                return currentHealth <= 0f; 
             }
         }
+
+
+        public void InstantiateDeadUnit()
+        {
+
+            GameObject spawnedUnit = Instantiate(deadUnit);
+            spawnedUnit.transform.parent = parentForDead.transform;
+            spawnedUnit.transform.localPosition = transform.localPosition;
+        }
+
     }
 }

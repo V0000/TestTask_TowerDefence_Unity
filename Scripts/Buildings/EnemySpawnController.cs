@@ -14,7 +14,7 @@ namespace Buildings
 
         override protected void Start()
         {
-            base.Start();
+            base.Start();                      
             listOfEnemies = waveScheduler.GetListOfEnemies();
             StartNextEnemy();
 
@@ -36,11 +36,6 @@ namespace Buildings
 
         }
 
-        override protected UnitData GetUnitForBuild()
-        {
-
-            return selectedUnit;
-        }
 
 
         override protected IEnumerator SpawnPerTime(float time)

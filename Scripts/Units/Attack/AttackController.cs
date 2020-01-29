@@ -72,9 +72,9 @@ namespace Units.Attack
             }
         }
 		
-        void AttackSwicher(GameObject target)
+        public void AttackSwicher(GameObject target)
         {
-            if (Vector3.Distance(target.transform.position, transform.position) < attackController.AttackDistance)
+            if (Vector3.Distance(target.transform.position, transform.position) < AttackDistance)
             {
                 if (!attackRunning)
                 {

@@ -10,8 +10,8 @@ namespace Units.Data
         public float maxHealth;
         [Range(0, 1)]
         public float armor;
-        public float gold;
-        public float xp;
+        public int gold;
+        public int xp;
 		public GameObject deadUnitPrefab;
 
         [Space]

@@ -11,6 +11,7 @@ namespace Buildings
     public class UnitBuilder : MonoBehaviour
     {
         public GameObject parent;
+        public GameObject parentForDead;
         private GameObject unit;
         private Vector3 spawnLocation;
         private NavMeshAgent navMeshAgent;
@@ -26,7 +27,7 @@ namespace Buildings
         public void NewUnit(UnitData data, Vector3 spawnLocation)
         {
             BuildUnit(data);
-            InstantiateUnit(unit, spawnLocation);
+            InstantiateUnit(unit, spawnLocation);            
             ObjectRegistry.AddUnit(unit, data.isEnemy);
 
         }
@@ -38,6 +39,7 @@ namespace Buildings
         void BuildUnit(UnitData data)
         {
             unit = data.prefab;
+            
 
             //set appearance settings
             SetMaterial(unit, data.material);
@@ -54,17 +56,19 @@ namespace Buildings
             //set health settings
             healthController = unit.GetComponent<HealthController>();
             healthController.MaxHealth = data.maxHealth;
+            healthController.Health = data.maxHealth;
             healthController.Armor = data.armor;
             healthController.Gold = data.gold;
-            healthController.Hp = data.xp;
-			healthController.DeadUnit = data.deadUnitPrefab;
+            healthController.Xp = data.xp;
+            healthController.deadUnit = data.deadUnitPrefab;
+            healthController.parentForDead = parentForDead;
+            
 
             //set attack settings
             attackController = unit.GetComponent<AttackController>();
             attackController.Attack = data.attack;
             attackController.AttackSpeed = data.attackSpeed;
             attackController.AttackDistance = data.attackDistance;
-
         }
 
 
@@ -73,9 +77,11 @@ namespace Buildings
             GameObject spawnedUnit = Instantiate(unit);
             spawnedUnit.transform.parent = parent.transform;
             spawnedUnit.transform.localPosition = spawnLocation;
+
+
         }
 
-        void SetMaterial(GameObject unit, Material material)
+            void SetMaterial(GameObject unit, Material material)
         {
             unit.GetComponent<Renderer>().material = material;
             unit.gameObject.transform.GetChild(0).GetComponent<Renderer>().material = material;

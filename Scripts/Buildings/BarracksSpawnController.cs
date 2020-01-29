@@ -6,30 +6,35 @@ namespace Buildings
 {
     public class BarracksSpawnController : SpawnController
     {
-        public TypesOfUnits typesOfUnits;
+        //public TypesOfUnits typesOfUnits;
         public int level = 1;
         public bool isWarriorDefault = true;
+        public TypesOfUnits typesOfUnits;
 
 
         protected override void Start()
         {
             base.Start();
+            selectedUnit = GetUnitForBuild();
+            Debug.Log(selectedUnit);
             spawnTime = selectedUnit.trainingTime;
             StartCoroutine(SpawnPerTime(spawnTime));
+            
         }
 
 
-        override protected UnitData GetUnitForBuild()
+        protected UnitData GetUnitForBuild()
         {
             UnitData levelData;
+            
             if (isWarriorDefault)
             {
-                levelData = typesOfUnits.minionWarriors[level - 1]; //level start with 1
+                levelData = typesOfUnits.minionWarriors[0]; //level start with 1
             }
 
             else
             {
-                levelData = typesOfUnits.minionArchers[level - 1];
+                levelData = typesOfUnits.minionArchers[0];
             }
             return levelData;
         }

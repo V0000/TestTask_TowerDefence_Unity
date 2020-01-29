@@ -22,14 +22,14 @@ namespace Units
             agent = GetComponent<NavMeshAgent>();
             attackController = GetComponent<AttackController>();
             healthController = GetComponent<HealthController>();
-			StartCoroutine(FindTargetPerTime(timeForFingTarget)));
-			
+			StartCoroutine(FindTargetPerTime(timeForFingTarget)); 
+
         }
 
         void Update()
         {
             attackController.AttackSwicher(target);
-            healthController.CheckDeath();
+            CheckDeath();
         }
 		
 		void OnDestroy()
@@ -37,8 +37,8 @@ namespace Units
 			//Reward for killing enemy
             if (isEnemy)
 			{
-				ObjectRegistry.gold += healthController.goldForDeath;
-				ObjectRegistry.xp += healthController.xpForDeath;
+				ObjectRegistry.gold += healthController.Gold;
+				ObjectRegistry.xp += healthController.Xp;
 			}
         }
 
@@ -73,6 +73,17 @@ namespace Units
                 UpdateTargets();
 				agent.destination = target.transform.position;
                 yield return new WaitForSeconds(time);
+            }
+        }
+
+        public void CheckDeath()
+        {
+            if (healthController.IsDead)
+            {
+                ObjectRegistry.RemoveUnit(gameObject, isEnemy);
+                Destroy(GetComponent<Rigidbody>());
+                healthController.InstantiateDeadUnit();
+                Destroy(gameObject);
             }
         }
     }

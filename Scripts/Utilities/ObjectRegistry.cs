@@ -22,8 +22,8 @@ namespace Utilities
         public static GameObject couch;
 		
 		//Main resourses of player
-		public static int gold;
-		public static int xp;
+		public static int gold = 0;
+		public static int xp = 0;
         /// <summary>
         /// Find in lists of units nearest object
         /// </summary>
