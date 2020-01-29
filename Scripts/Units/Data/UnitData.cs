@@ -12,6 +12,7 @@ namespace Units.Data
         public float armor;
         public float gold;
         public float xp;
+		public GameObject deadUnitPrefab;
 
         [Space]
         //Fields for AttackController
@@ -28,7 +29,7 @@ namespace Units.Data
         [Space]
         //Fields for UnitBuilder
         public float trainingTime;
-        public GameObject prefab;
+        public GameObject prefab;		
         public Material material;
 
         [Header("Level Settings")]

@@ -11,7 +11,15 @@ namespace Units.Health
         private float armor;
         private float goldForDeath;
         private float xpForDeath;
+		private GameObject deadUnit;
 
+		void OnDestroy()
+        {
+            GameObject spawnedUnit = Instantiate(healthController.deadUnit);
+            //spawnedUnit.transform.parent = parent.transform;
+            spawnedUnit.transform.localPosition = transform.localPosition;
+        }
+		
         #region Setters and getters
 
 
@@ -91,6 +99,18 @@ namespace Units.Health
                 }
             }
         }
+		
+		public float DeadUser
+        {
+            get
+            {
+                return deadUnit;
+            }
+            set
+            {
+                deadUnit = value;
+            }
+        }
         #endregion
 
 
@@ -127,6 +147,15 @@ namespace Units.Health
         public bool IsDead
         {
             get { return currentHealth <= 0f; }
+        }
+		
+		void CheckDeath()
+        {
+            if (IsDead)
+            {
+                ObjectRegistry.RemoveUnit(gameObject, isEnemy);
+				Destroy(gameObject);
+            }
         }
     }
 }

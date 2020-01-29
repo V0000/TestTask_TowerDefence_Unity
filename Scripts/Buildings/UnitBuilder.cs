@@ -57,6 +57,7 @@ namespace Buildings
             healthController.Armor = data.armor;
             healthController.Gold = data.gold;
             healthController.Hp = data.xp;
+			healthController.DeadUnit = data.deadUnitPrefab;
 
             //set attack settings
             attackController = unit.GetComponent<AttackController>();
@@ -69,9 +70,9 @@ namespace Buildings
 
         void InstantiateUnit(GameObject unit, Vector3 spawnLocation)
         {
-            GameObject SpawnedUnit = Instantiate(unit);
-            SpawnedUnit.transform.parent = parent.transform;
-            SpawnedUnit.transform.localPosition = spawnLocation;
+            GameObject spawnedUnit = Instantiate(unit);
+            spawnedUnit.transform.parent = parent.transform;
+            spawnedUnit.transform.localPosition = spawnLocation;
         }
 
         void SetMaterial(GameObject unit, Material material)

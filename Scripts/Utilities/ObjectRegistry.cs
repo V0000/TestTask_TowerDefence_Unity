@@ -20,7 +20,10 @@ namespace Utilities
 
         //Main target of enemies
         public static GameObject couch;
-
+		
+		//Main resourses of player
+		public static int gold;
+		public static int xp;
         /// <summary>
         /// Find in lists of units nearest object
         /// </summary>

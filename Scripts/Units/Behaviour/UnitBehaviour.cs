@@ -10,31 +10,35 @@ namespace Units
     public class UnitBehaviour : MonoBehaviour
     {
         [HideInInspector]
-        public bool isEnemy;
-        public Transform fountain;
+        public bool isEnemy;        
         private GameObject target;
         private NavMeshAgent agent;
         private AttackController attackController;
-        private HealthController healthController;
-        private bool attackRunning = false;
-
-
+        private HealthController healthController;        
+		private float timeForFingTarget = 2f;
 
         void Start()
         {
             agent = GetComponent<NavMeshAgent>();
             attackController = GetComponent<AttackController>();
             healthController = GetComponent<HealthController>();
+			StartCoroutine(FindTargetPerTime(timeForFingTarget)));
+			
         }
-
 
         void Update()
         {
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!будет грузить пиздос, переделать
-            UpdateTargets();
-            agent.destination = target.transform.position;
-            AttackSwicher();
-            CheckDeath();
+            attackController.AttackSwicher(target);
+            healthController.CheckDeath();
+        }
+		
+		void OnDestroy()
+        {
+            if (isEnemy)
+			{
+				ObjectRegistry.gold += healthController.goldForDeath;
+				ObjectRegistry.xp += healthController.xpForDeath;
+			}
         }
 
         void OnDrawGizmos()
@@ -42,44 +46,32 @@ namespace Units
             Debug.DrawRay(transform.position, target.transform.position);
         }
 
-        void CheckDeath()
-        {
-            if (healthController.IsDead)
-            {
-                ObjectRegistry.RemoveUnit(gameObject, isEnemy);
-            }
-        }
-
-        void AttackSwicher()
-        {
-            if (Vector3.Distance(target.transform.position, transform.position) < attackController.AttackDistance)
-            {
-                if (!attackRunning)
-                {
-                    attackRunning = true;
-                    attackController.StartAttack(target);
-                }
-            }
-            else
-            {
-                if (attackRunning)
-                {
-                    attackRunning = false;
-                    attackController.StopAttack();
-                }
-            }
-        }
-
-
         private void UpdateTargets()
         {
             if (ObjectRegistry.TargetIsExist(isEnemy))
             {
-                target = ObjectRegistry.fountain;
+                target = ObjectRegistry.GetNearestTarget(transform, isEnemy);			
             }
             else
             {
-                target = ObjectRegistry.GetNearestTarget(transform, isEnemy);
+                if(isEnemy)
+				{
+					target = ObjectRegistry.couch;
+				}
+				else
+				{
+					target = ObjectRegistry.fountain;
+				}	
+            }
+        }
+		
+		private IEnumerator FindTargetPerTime(float time)
+        {
+            while (true)
+            {
+                UpdateTargets();
+				agent.destination = target.transform.position;
+                yield return new WaitForSeconds(time);
             }
         }
     }
