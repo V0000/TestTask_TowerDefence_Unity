@@ -62,6 +62,7 @@ namespace Buildings
             healthController.Xp = data.xp;
             healthController.deadUnit = data.deadUnitPrefab;
             healthController.parentForDead = parentForDead;
+            healthController.isEnemy = data.isEnemy;
             
 
             //set attack settings

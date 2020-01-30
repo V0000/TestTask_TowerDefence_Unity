@@ -13,13 +13,15 @@ namespace Units.Health
         private int goldForDeath;
         private int xpForDeath;
         [HideInInspector]
-		public GameObject deadUnit;
+        public GameObject deadUnit;
         [HideInInspector]
         public GameObject parentForDead;
+        [HideInInspector]
+        public bool isEnemy;
 
 
 
-		
+
         #region Setters and getters
 
 
@@ -100,7 +102,7 @@ namespace Units.Health
                 }
             }
         }
-		
+
 
         #endregion
 
@@ -112,6 +114,10 @@ namespace Units.Health
                 return;
             }
             currentHealth -= damage;
+            if (currentHealth <= 0)
+            {
+                DeadOfUnit();
+            }
         }
 
         /// <summary>
@@ -135,13 +141,12 @@ namespace Units.Health
             currentHealth += healthIncrement;
         }
 
-        public bool IsDead
+        public void DeadOfUnit()
         {
-            get 
-            {
-                Debug.Log(currentHealth);
-                return currentHealth <= 0f; 
-            }
+            ObjectRegistry.RemoveUnit(gameObject, isEnemy);
+            Destroy(GetComponent<Rigidbody>());
+            InstantiateDeadUnit();
+            Destroy(gameObject);
         }
 
 

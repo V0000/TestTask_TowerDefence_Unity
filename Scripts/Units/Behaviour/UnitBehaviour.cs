@@ -17,19 +17,20 @@ namespace Units
         private HealthController healthController;        
 		private float timeForFingTarget = 2f;
 
+
         void Start()
         {
             agent = GetComponent<NavMeshAgent>();
             attackController = GetComponent<AttackController>();
             healthController = GetComponent<HealthController>();
-			StartCoroutine(FindTargetPerTime(timeForFingTarget)); 
+			StartCoroutine(FindTargetPerTime(timeForFingTarget));
+            
 
         }
 
         void Update()
         {
             attackController.AttackSwicher(target);
-            CheckDeath();
         }
 		
 		void OnDestroy()
@@ -76,15 +77,7 @@ namespace Units
             }
         }
 
-        public void CheckDeath()
-        {
-            if (healthController.IsDead)
-            {
-                ObjectRegistry.RemoveUnit(gameObject, isEnemy);
-                Destroy(GetComponent<Rigidbody>());
-                healthController.InstantiateDeadUnit();
-                Destroy(gameObject);
-            }
-        }
+
+        
     }
 }
