@@ -1,0 +1,121 @@
+	class ClassCounter  //Это класс - в котором производится счет.
+    {
+        public delegate void MethodContainer();
+
+        //Событие OnCount c типом делегата MethodContainer.
+        //public event MethodContainer onCount;
+		//public event MethodContainer OnCount = delegate{};
+		public event EventHandler MyEvent = delegate { }; //класс должен наследоваться от EventArgs
+		
+		EventHandler принимает (object sender, ThresholdReachedEventArgs e)
+
+        public void Count()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                if (i == 71)
+                {
+					onCount = () => { };
+                }
+            }
+        }
+    }
+	
+	class Program
+    {
+        static void Main(string[] args)
+        {
+            ClassCounter Counter = new ClassCounter();
+            Handler_I Handler1 = new Handler_I();
+            Handler_II Handler2 = new Handler_II();
+        }
+    }
+	
+	class Handler_I //Это класс, реагирующий на событие (счет равен 71) записью строки в консоли.
+    {
+        public void Message()
+        {
+            //Не забудьте using System 
+            //для вывода в консольном приложении
+            Console.WriteLine("Пора действовать, ведь уже 71!"); 
+        }                                                        
+    }
+	
+	class Handler_II
+    {
+        public void Message()
+        {
+            Console.WriteLine("Точно, уже 71!");
+        }    
+    }
+	__________________________________________________________________________
+	
+	using System;
+
+namespace ConsoleApplication1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Counter c = new Counter(new Random().Next(10));
+            c.ThresholdReached += c_ThresholdReached;
+
+            Console.WriteLine("press 'a' key to increase total");
+            while (Console.ReadKey(true).KeyChar == 'a')
+            {
+                Console.WriteLine("adding one");
+                c.Add(1);
+            }
+        }
+
+        static void c_ThresholdReached(object sender, ThresholdReachedEventArgs e)
+        {
+            Console.WriteLine("The threshold of {0} was reached at {1}.", e.Threshold,  e.TimeReached);
+            Environment.Exit(0);
+        }
+    }
+
+    class Counter
+    {
+        private int threshold;
+        private int total;
+
+        public Counter(int passedThreshold)
+        {
+            threshold = passedThreshold;
+        }
+
+        public void Add(int x)
+        {
+            total += x;
+            if (total >= threshold)
+            {
+                ThresholdReachedEventArgs args = new ThresholdReachedEventArgs();
+                args.Threshold = threshold;
+                args.TimeReached = DateTime.Now;
+                OnThresholdReached(args);
+            }
+        }
+
+        protected virtual void OnThresholdReached(ThresholdReachedEventArgs e)
+        {
+            EventHandler<ThresholdReachedEventArgs> handler = ThresholdReached;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        public event EventHandler<ThresholdReachedEventArgs> ThresholdReached;
+    }
+
+    public class ThresholdReachedEventArgs : EventArgs
+    {
+        public int Threshold { get; set; }
+        public DateTime TimeReached { get; set; }
+    }
+}
+	
+	
+	
