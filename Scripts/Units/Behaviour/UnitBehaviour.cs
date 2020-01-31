@@ -15,44 +15,37 @@ namespace Units
         private NavMeshAgent agent;
         private AttackController attackController;
         private HealthController healthController;        
-		private float timeForFingTarget = 2f;
-
+		private float timeForFingTarget = 1f;
 
         void Start()
         {
             agent = GetComponent<NavMeshAgent>();
             attackController = GetComponent<AttackController>();
             healthController = GetComponent<HealthController>();
-			StartCoroutine(FindTargetPerTime(timeForFingTarget));
-            
-
-        }
-
-        void Update()
-        {
-            attackController.AttackSwicher(target);
-        }
-		
-		void OnDestroy()
-        {
-			//Reward for killing enemy
-            if (isEnemy)
-			{
-				ObjectRegistry.gold += healthController.Gold;
-				ObjectRegistry.xp += healthController.Xp;
-			}
+			StartCoroutine(FindTargetPerTime(timeForFingTarget)); 
         }
 
         void OnDrawGizmos()
         {
             Debug.DrawRay(transform.position, target.transform.position);
-        }
+        }		
+		
+		private IEnumerator FindTargetPerTime(float time)
+        {
 
-        private void UpdateTargets()
+                yield return StartCoroutine(UpdateTargets());
+				agent.destination = target.transform.position;
+                yield return new WaitForSeconds(time);
+				StartCoroutine(FindTargetPerTime(timeForFingTarget));
+            
+        } 
+
+        private IEnumerator UpdateTargets()
         {
             if (ObjectRegistry.TargetIsExist(isEnemy))
             {
-                target = ObjectRegistry.GetNearestTarget(transform, isEnemy);			
+                target = ObjectRegistry.GetNearestTarget(transform, isEnemy);
+				attackController.target = target;
             }
             else
             {
@@ -63,21 +56,9 @@ namespace Units
 				else
 				{
 					target = ObjectRegistry.fountain;
+					attackController.target = null;
 				}	
             }
-        }
-		
-		private IEnumerator FindTargetPerTime(float time)
-        {
-            while (true)
-            {
-                UpdateTargets();
-				agent.destination = target.transform.position;
-                yield return new WaitForSeconds(time);
-            }
-        }
-
-
-        
+        }       
     }
 }

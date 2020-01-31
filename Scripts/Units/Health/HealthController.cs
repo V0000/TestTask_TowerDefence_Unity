@@ -143,6 +143,13 @@ namespace Units.Health
 
         public void DeadOfUnit()
         {
+			//Reward for killing enemy
+            if (isEnemy)
+			{
+				ObjectRegistry.gold += healthController.Gold;
+				ObjectRegistry.xp += healthController.Xp;
+			}
+			
             ObjectRegistry.RemoveUnit(gameObject, isEnemy);
             Destroy(GetComponent<Rigidbody>());
             InstantiateDeadUnit();

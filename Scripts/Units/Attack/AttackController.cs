@@ -10,8 +10,15 @@ namespace Units.Attack
         private float attackSpeed;
         private float attackDistance;
 		private bool attackRunning = false;
-        private HealthController healthController;
+        private HealthController healthControllerTarget;
+		private float timeForStartAttack = 1f;
+		[HideInInspector]
+		public GameObject target;
 		
+		void Start()
+        {
+			StartCoroutine(AttackSwicher()); 
+        }
 
         #region Properties
 
@@ -63,34 +70,39 @@ namespace Units.Attack
 
         #endregion
 
-        private IEnumerator AttackPerTime(HealthController healthController)
+        private IEnumerator AttackPerTime()
         {
-            while (true)
-            {
-                healthController.TakeDamage(attack);
+                healthControllerTarget.TakeDamage(attack);
                 yield return new WaitForSeconds(attackSpeed);
-            }
+				StartCoroutine(AttackPerTime());            
         }
 		
-        public void AttackSwicher(GameObject target)
+        public IEnumerator AttackSwicher()
         {
-            if (Vector3.Distance(target.transform.position, transform.position) < AttackDistance)
-            {
-                if (!attackRunning)
-                {
-                    attackRunning = true;
-					healthController = target.GetComponent<HealthController>();
-					StartCoroutine(AttackPerTime(healthController));
-                }
-            }
-            else
-            {
-                if (attackRunning)
-                {
-                    attackRunning = false;
-                    StopCoroutine(AttackPerTime(healthController));
-                }
-            }
+			
+				if (target == null)
+				{
+					yield return null;
+				}
+				if (Vector3.Distance(target.transform.position, transform.position) < AttackDistance)
+				{
+					if (!attackRunning)
+					{
+						attackRunning = true;
+						healthControllerTarget = target.GetComponent<HealthController>();
+						StartCoroutine(AttackPerTime());
+					}
+				}
+				else
+				{
+					if (attackRunning)
+					{
+						attackRunning = false;
+						StopCoroutine(AttackPerTime());
+					}
+				}
+				yield return new WaitForSeconds(timeForStartAttack);
+			StartCoroutine(AttackSwicher()); 
         }		
 
     }
