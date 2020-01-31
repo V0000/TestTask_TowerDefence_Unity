@@ -10,7 +10,7 @@ namespace Buildings
 		private Vector3 center; 
 		public float healRadius = 5f;
 		public float healFrequency = 1f;
-		public float healNumber = 5f;
+		public float healValue = 5f;
 
         void Start()
         {
@@ -23,7 +23,10 @@ namespace Buildings
 		private IEnumerator HealAllInRadius()
         {
 			hitColliders = Physics.OverlapSphere(center, healRadius);
-			f
+			foreach (Collider unitCollider in hitColliders)
+			{
+				unitCollider.gameObject.GetComponent<HealthController>().AddHealth(healValue);
+			}
 			yield return new WaitForSeconds(healFrequency);
 			StartCoroutine(HealAllInRadius()); 
         }
