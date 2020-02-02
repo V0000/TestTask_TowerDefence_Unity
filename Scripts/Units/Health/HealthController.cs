@@ -66,7 +66,6 @@ namespace Units.Health
             {
                 if (value > 0)
                 {
-                    Debug.Log(value);
                     currentHealth = value;
                 }
             }
@@ -128,7 +127,7 @@ namespace Units.Health
             get { return Mathf.Approximately(currentHealth, maxHealth); }
         }
 
-        protected void AddHealth(float healthIncrement)
+        public void AddHealth(float healthIncrement)
         {
             if (healthIncrement <= 0)
             {
@@ -146,8 +145,8 @@ namespace Units.Health
 			//Reward for killing enemy
             if (isEnemy)
 			{
-				ObjectRegistry.gold += healthController.Gold;
-				ObjectRegistry.xp += healthController.Xp;
+				ObjectRegistry.gold += goldForDeath;
+				ObjectRegistry.xp += xpForDeath;
 			}
 			
             ObjectRegistry.RemoveUnit(gameObject, isEnemy);

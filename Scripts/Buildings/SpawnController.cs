@@ -33,8 +33,7 @@ namespace Buildings
                 yield return new WaitForSeconds(time);
                 if (selectedUnit != null)
                 {
-                    Debug.Log(selectedUnit);
-                    Debug.Log(spawnLocation);
+
                     CreateUnit();
                 }
             }

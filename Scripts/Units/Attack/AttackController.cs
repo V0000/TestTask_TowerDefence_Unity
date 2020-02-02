@@ -12,7 +12,7 @@ namespace Units.Attack
 		private bool attackRunning = false;
         private HealthController healthControllerTarget;
 		private float timeForStartAttack = 1f;
-		[HideInInspector]
+		//[HideInInspector]
 		public GameObject target;
 		
 		void Start()

@@ -16,7 +16,6 @@ namespace Buildings
         {
             base.Start();
             selectedUnit = GetUnitForBuild();
-            Debug.Log(selectedUnit);
             spawnTime = selectedUnit.trainingTime;
             StartCoroutine(SpawnPerTime(spawnTime));
             

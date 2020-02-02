@@ -24,6 +24,10 @@ namespace Utilities
 		//Main resourses of player
 		public static int gold = 0;
 		public static int xp = 0;
+
+        //Count of units
+        public static int minionsCount = 0;
+        public static int enemyCount = 0;
         /// <summary>
         /// Find in lists of units nearest object
         /// </summary>
@@ -32,7 +36,7 @@ namespace Utilities
         public static GameObject GetNearestTarget(Transform objectTransform, bool youIsEnemy)
         {
             GameObject nearestObject = null;
-            float nearestDistance = Mathf.Infinity;
+            float nearestDistance = Mathf.Infinity;            
             float distance;
             List<GameObject> units = youIsEnemy ? minions : enemies;
             foreach (GameObject target in units)
@@ -43,19 +47,19 @@ namespace Utilities
                     nearestDistance = distance;
                     nearestObject = target;
                 }
+                
             }
-            Debug.Log(nearestObject);
+            
             return nearestObject;
         }
 
         public static bool TargetIsExist(bool youIsEnemy)
-        {
-            List<GameObject> units = youIsEnemy ? minions : enemies;
-            if (units.Any())
+        {            
+            if (youIsEnemy)
             {
-                return true;
+                return minionsCount != 0;
             }
-            return false;
+            return enemyCount != 0;
         }
         public static void AddUnit(GameObject unit, bool youIsEnemy)
         {
@@ -67,6 +71,7 @@ namespace Utilities
             {
                 minions.Add(unit);
             }
+            UpdateCountOfUnits();
         }
         public static void RemoveUnit(GameObject unit, bool youIsEnemy)
         {
@@ -78,6 +83,12 @@ namespace Utilities
             {
                 minions.Remove(unit);
             }
+        }
+
+        public static void UpdateCountOfUnits()
+        {
+            minionsCount = minions.Count();
+            enemyCount = enemies.Count();
         }
 
     }

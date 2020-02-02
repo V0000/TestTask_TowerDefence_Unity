@@ -28,7 +28,7 @@ namespace Buildings
         {
             BuildUnit(data);
             InstantiateUnit(unit, spawnLocation);            
-            ObjectRegistry.AddUnit(unit, data.isEnemy);
+            
 
         }
 

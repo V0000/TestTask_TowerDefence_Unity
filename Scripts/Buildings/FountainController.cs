@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Utilities;
+using Units.Health;
 
 namespace Buildings
 {
@@ -12,9 +13,12 @@ namespace Buildings
 		public float healFrequency = 1f;
 		public float healValue = 5f;
 
-        void Start()
-        {
-            ObjectRegistry.fountain = gameObject;
+		void Awake()
+		{
+			ObjectRegistry.fountain = gameObject;
+		}
+		void Start()
+        {            
 			center = gameObject.transform.position;			
 			StartCoroutine(HealAllInRadius()); 
         }

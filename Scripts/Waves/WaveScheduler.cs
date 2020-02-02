@@ -24,8 +24,7 @@ namespace Waves
                 }
 
             }
-            Debug.Log("In listOfEnemies:" + listOfEnemies.Count);
-            foreach (Enemy e in listOfEnemies) Debug.Log(e.timeToNextSpawn);
+            Debug.Log("In wave schedule:" + listOfEnemies.Count);            
             return listOfEnemies;
 
 

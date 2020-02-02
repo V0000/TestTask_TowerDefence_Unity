@@ -10,31 +10,37 @@ namespace Units
     public class UnitBehaviour : MonoBehaviour
     {
         [HideInInspector]
-        public bool isEnemy;        
-        private GameObject target;
+        public bool isEnemy;
+        public GameObject target;
         private NavMeshAgent agent;
         private AttackController attackController;
         private HealthController healthController;        
 		private float timeForFingTarget = 1f;
 
+
         void Start()
         {
+            ObjectRegistry.AddUnit(gameObject, isEnemy);
             agent = GetComponent<NavMeshAgent>();
             attackController = GetComponent<AttackController>();
             healthController = GetComponent<HealthController>();
-			StartCoroutine(FindTargetPerTime(timeForFingTarget)); 
+            StartCoroutine(FindTargetPerTime(timeForFingTarget));
         }
 
         void OnDrawGizmos()
         {
-            Debug.DrawRay(transform.position, target.transform.position);
+            if(target!=null)
+            {
+                Debug.DrawRay(transform.position, target.transform.position - transform.position, Color.yellow);
+            }
+            
         }		
 		
 		private IEnumerator FindTargetPerTime(float time)
         {
 
                 yield return StartCoroutine(UpdateTargets());
-				agent.destination = target.transform.position;
+				agent.destination = target.transform.position;               
                 yield return new WaitForSeconds(time);
 				StartCoroutine(FindTargetPerTime(timeForFingTarget));
             
@@ -44,21 +50,23 @@ namespace Units
         {
             if (ObjectRegistry.TargetIsExist(isEnemy))
             {
-                target = ObjectRegistry.GetNearestTarget(transform, isEnemy);
-				attackController.target = target;
+                target = ObjectRegistry.GetNearestTarget(transform, isEnemy);                
+                attackController.target = target;
             }
             else
             {
                 if(isEnemy)
 				{
 					target = ObjectRegistry.couch;
-				}
+                    attackController.target = target;
+                }
 				else
 				{
 					target = ObjectRegistry.fountain;
 					attackController.target = null;
 				}	
             }
+            yield return null;
         }       
     }
 }
