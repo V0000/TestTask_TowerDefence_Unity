@@ -11,6 +11,7 @@ namespace Units
     {
         [HideInInspector]
         public bool isEnemy;
+		private bool selected;
         public GameObject target;
         private NavMeshAgent agent;
         private AttackController attackController;
