@@ -85,8 +85,11 @@ namespace Buildings
             void SetMaterial(GameObject unit, Material material)
         {
             unit.GetComponent<Renderer>().material = material;
-            unit.gameObject.transform.GetChild(0).GetComponent<Renderer>().material = material;
+            unit.gameObject.transform.Find("Head").GetComponent<Renderer>().material = material;
+            unit.gameObject.transform.Find("Marker").GetComponent<Renderer>().material = material;
+
         }
+
 
     }
 }

@@ -19,7 +19,7 @@ namespace Buildings
 		}
 		void Start()
         {            
-			center = gameObject.transform.position;			
+			center = transform.position;			
 			StartCoroutine(HealAllInRadius()); 
         }
 

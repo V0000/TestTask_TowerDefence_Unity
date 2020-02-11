@@ -4,25 +4,46 @@ using UnityEngine.UI;
 
 namespace UI
 {
-	public class TimerOnScreen : MonoBehaviour
-	{
-		public Text scoreText;
-		public bool isVisible;
+    public class TimerOnScreen : MonoBehaviour
+    {
+        private Text timerText;
+        private bool isRunning = false;
+        
 
 
-		void Start()
-		{
-			InvokeRepeating("RunTimer", 1, 1);
-		}
+        void Start()
+        {
+            isRunning = false;
+            timerText = GetComponent<Text>();
+            timerText.text = "";
+            Run(10);
+        }
 
-		void Update()
-		{
+        public void Run(int seconds)
+        {
+            if (!isRunning)
+            {
+                isRunning = true;
+                StartCoroutine(Timer(seconds));
+            }
+        }
 
-		}
-		
-			void RunTimer() {
-			scoreText.text = (int.Parse(scoreText.text) - 1).ToString();
-		}
+        private IEnumerator Timer(int seconds)
+        {
+            timerText.text = seconds.ToString();
+            yield return new WaitForSeconds(1); //tick 1 second
 
-	}
+            if(seconds > 1)
+            {
+                StartCoroutine(Timer(--seconds));
+            }
+            else
+            {
+                timerText.text = "GO!";
+                yield return new WaitForSeconds(2);
+                timerText.text = "";
+                isRunning = false;
+            }
+        }
+    }
 }
