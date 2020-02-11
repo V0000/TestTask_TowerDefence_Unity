@@ -5,7 +5,7 @@ using Units.Health;
 
 namespace Buildings
 {
-    public class FountainController : MonoBehaviour
+    public class FountainController : SpawnController
     {
 		private Collider[] hitColliders;
 		private Vector3 center; 

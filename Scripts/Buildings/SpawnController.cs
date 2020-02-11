@@ -4,6 +4,7 @@ using Units.Data;
 
 namespace Buildings
 {
+	[RequireComponent(typeof(UnitBuilder))]
     public abstract class SpawnController : MonoBehaviour
     {
         protected UnitData selectedUnit;

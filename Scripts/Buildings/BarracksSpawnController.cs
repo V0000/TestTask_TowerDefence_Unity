@@ -6,7 +6,6 @@ namespace Buildings
 {
     public class BarracksSpawnController : SpawnController
     {
-        //public TypesOfUnits typesOfUnits;
         public int level = 1;
         public bool isWarriorDefault = true;
         public TypesOfUnits typesOfUnits;
