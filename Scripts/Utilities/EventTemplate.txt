@@ -130,3 +130,27 @@ namespace ConsoleApplication1
             agent.SetPath(path); //Agent is the NavMeshAgent attached to gameObject
 	
 	
+	
+	/* Andrei Jifcovici
+ * In2GPU.com
+ */
+using UnityEngine;
+using System.Collections;
+ 
+public class ClickOnFaceScript : MonoBehaviour {
+ 
+    // Эта функция вызывается, когда курсор находится над GameObject, на котором этот скрипт расположен
+    void OnMouseOver() {
+        // Если нажата левая клавиша мыши
+        if (Input.GetMouseButtonDown(0)) {
+            // Выводим сообщение в консоль
+            Debug.Log("Left click!");
+        }
+ 
+        // Если правая клавиша нажата
+        if (Input.GetMouseButtonDown(1)) {
+            // Выводим сообщение
+            Debug.Log("Right click!");
+        }
+    }
+}
