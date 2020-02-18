@@ -27,9 +27,12 @@ namespace Buildings
 		private IEnumerator HealAllInRadius()
         {
 			hitColliders = Physics.OverlapSphere(center, healRadius);
-			foreach (Collider unitCollider in hitColliders)
+			if (hitColliders.Length != 0)
 			{
-				unitCollider.gameObject.GetComponent<HealthController>().AddHealth(healValue);
+				foreach (Collider unitCollider in hitColliders)
+				{
+					unitCollider.gameObject.GetComponent<HealthController>().AddHealth(healValue);
+				}
 			}
 			yield return new WaitForSeconds(healFrequency);
 			StartCoroutine(HealAllInRadius()); 

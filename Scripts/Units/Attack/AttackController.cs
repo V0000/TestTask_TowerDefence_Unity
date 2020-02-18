@@ -8,7 +8,7 @@ namespace Units.Attack
     {
         private float attack;
         private float attackSpeed;
-        private float attackDistance;
+        private float attackDistance = 0;
 		private bool attackRunning = false;
         private HealthController healthControllerTarget;
 		private float timeForStartAttack = 1f;
@@ -17,7 +17,8 @@ namespace Units.Attack
 		
 		void Start()
         {
-			StartCoroutine(AttackSwicher()); 
+            
+            StartCoroutine(AttackSwicher()); 
         }
 
         #region Properties
@@ -33,6 +34,7 @@ namespace Units.Attack
             {
                 if (value > 0)
                 {
+                    
                     attack = value;
                 }
             }
@@ -57,12 +59,14 @@ namespace Units.Attack
         {
             get
             {
+                
                 return attackDistance;
             }
             set
             {
                 if (value > 0)
                 {
+                   
                     attackDistance = value;
                 }
             }
@@ -72,7 +76,8 @@ namespace Units.Attack
 
         private IEnumerator AttackPerTime()
         {
-                healthControllerTarget.TakeDamage(attack);
+            
+            healthControllerTarget.TakeDamage(attack);
                 yield return new WaitForSeconds(attackSpeed);
 				StartCoroutine(AttackPerTime());            
         }
@@ -84,10 +89,13 @@ namespace Units.Attack
 				{
 					yield return null;
 				}
-				if (Vector3.Distance(target.transform.position, transform.position) < AttackDistance)
+            
+            if (Vector3.Distance(target.transform.position, transform.position) < attackDistance)
 				{
-					if (!attackRunning)
+                
+                if (!attackRunning)
 					{
+                        
 						attackRunning = true;
 						healthControllerTarget = target.GetComponent<HealthController>();
 						StartCoroutine(AttackPerTime());
