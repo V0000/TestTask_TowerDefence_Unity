@@ -6,13 +6,15 @@ namespace Units.Attack
 {
     public class AttackController : MonoBehaviour
     {
-        private float attack;
+        [HideInInspector]
+        public float attack;
         private float attackSpeed;
-        private float attackDistance = 0;
+        [HideInInspector]
+        public float attackDistance = 0;
 		private bool attackRunning = false;
         private HealthController healthControllerTarget;
 		private float timeForStartAttack = 1f;
-		//[HideInInspector]
+		[HideInInspector]
 		public GameObject target;
 		
 		void Start()
