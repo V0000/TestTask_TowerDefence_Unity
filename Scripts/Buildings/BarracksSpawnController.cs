@@ -4,10 +4,15 @@ using Units.Data;
 
 namespace Buildings
 {
+	/// <summary>
+    /// Class for buildings that can build minions
+    /// </summary>
     public class BarracksSpawnController : SpawnController
     {
+		//Current level of building
         public int level = 1;
         public bool isWarriorDefault = true;
+		//All availible types of units
         public TypesOfUnits typesOfUnits;
 
 
@@ -20,7 +25,9 @@ namespace Buildings
             
         }
 
-
+		/// <summary>
+		/// Get UnitData for build according to level of building
+		/// </summary>
         protected UnitData GetUnitForBuild()
         {
             UnitData levelData;

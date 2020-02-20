@@ -23,7 +23,9 @@ namespace Buildings
 			StartCoroutine(HealAllInRadius()); 
         }
 
-		
+		/// <summary>
+		/// Find all minions in radius and heal they
+		/// </summary>		
 		private IEnumerator HealAllInRadius()
         {
 			hitColliders = Physics.OverlapSphere(center, healRadius);

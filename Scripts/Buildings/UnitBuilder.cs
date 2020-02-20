@@ -10,11 +10,15 @@ namespace Buildings
 {
     public class UnitBuilder : MonoBehaviour
     {
+		//Empty GameObjects for group instantiated units
         public GameObject parent;
         public GameObject parentForDead;
+		//Object, that we building(unit)
         private GameObject unit;
+		//Coordinates where unit will be instantiated
         private Vector3 spawnLocation;
-        private NavMeshAgent navMeshAgent;
+        //Сomponents on unit that will be customized
+		private NavMeshAgent navMeshAgent;
         private UnitBehaviour unitBehaviour;
         private HealthController healthController;
         private AttackController attackController;
@@ -27,9 +31,7 @@ namespace Buildings
         public void NewUnit(UnitData data, Vector3 spawnLocation)
         {
             BuildUnit(data);
-            InstantiateUnit(unit, spawnLocation);            
-            
-
+            InstantiateUnit(unit, spawnLocation);
         }
 
         /// <summary>
@@ -38,8 +40,7 @@ namespace Buildings
         /// <param name="data">List of settings</param>
         void BuildUnit(UnitData data)
         {
-            unit = data.prefab;
-            
+            unit = data.prefab;            
 
             //set appearance settings
             SetMaterial(unit, data.material);
@@ -62,8 +63,7 @@ namespace Buildings
             healthController.Xp = data.xp;
             healthController.deadUnit = data.deadUnitPrefab;
             healthController.parentForDead = parentForDead;
-            healthController.isEnemy = data.isEnemy;
-            
+            healthController.isEnemy = data.isEnemy;            
 
             //set attack settings
             attackController = unit.GetComponent<AttackController>();
@@ -72,17 +72,23 @@ namespace Buildings
             attackController.AttackDistance = data.attackDistance;
         }
 
-
+        /// <summary>
+        /// Set builded unit on coordinates
+        /// </summary>
         void InstantiateUnit(GameObject unit, Vector3 spawnLocation)
         {
             GameObject spawnedUnit = Instantiate(unit);
+			//Set parent for group instantiated units
             spawnedUnit.transform.parent = parent.transform;
             spawnedUnit.transform.localPosition = spawnLocation;
 
 
         }
-
-            void SetMaterial(GameObject unit, Material material)
+		
+        /// <summary>
+        /// Set material for unit and his childs
+        /// </summary>
+        void SetMaterial(GameObject unit, Material material)
         {
             unit.GetComponent<Renderer>().material = material;
             unit.gameObject.transform.Find("Head").GetComponent<Renderer>().material = material;

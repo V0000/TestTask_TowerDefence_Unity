@@ -4,11 +4,15 @@ using Units.Data;
 
 namespace Buildings
 {
+	/// <summary>
+    /// Abstract class for all buildings that can build units
+    /// </summary>
 	[RequireComponent(typeof(UnitBuilder))]
     public abstract class SpawnController : MonoBehaviour
-    {
+    
+		//settings for build unit
         protected UnitData selectedUnit;
-        private UnitBuilder builder;
+		private UnitBuilder builder;
         protected Vector3 spawnLocation;
         protected float spawnTime;
         
@@ -21,11 +25,16 @@ namespace Buildings
 
         }
 
+		/// <summary>
+		/// Build unit and set in coordinates
+		/// </summary>
         protected void CreateUnit()
         {
             builder.NewUnit(selectedUnit, spawnLocation);
         }
-
+		/// <summary>
+		/// Spawn unit every time seconds
+		/// </summary>
         protected virtual IEnumerator SpawnPerTime(float time)
         {
             while (true)
