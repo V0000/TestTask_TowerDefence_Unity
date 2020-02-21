@@ -17,6 +17,7 @@ namespace Units.Health
         public GameObject deadUnit;
         
         public GameObject parentForDead;
+		
         [HideInInspector]
         public bool isEnemy;
 
