@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Units.Attack
 {
+	/// <summary>
+    /// Class implement attack of any unit
+    /// </summary>
     public class AttackController : MonoBehaviour
     {
         [HideInInspector]
@@ -12,6 +15,7 @@ namespace Units.Attack
         [HideInInspector]
         public float attackDistance = 0;
 		private bool attackRunning = false;
+		//healthController of prey
         private HealthController healthControllerTarget;
 		private float timeForStartAttack = 1f;
 		[HideInInspector]
@@ -84,6 +88,9 @@ namespace Units.Attack
 				StartCoroutine(AttackPerTime());            
         }
 		
+		/// <summary>
+		/// Start and stop attack according to distance from target
+		/// </summary>
         public IEnumerator AttackSwicher()
         {
 			

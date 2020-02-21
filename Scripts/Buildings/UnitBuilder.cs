@@ -9,11 +9,12 @@ using Utilities;
 namespace Buildings
 {
     public class UnitBuilder : MonoBehaviour
-    {
-		//Empty GameObjects for group instantiated units
+    {		
+		[Tooltip("Empty GameObject for group created units")]
         public GameObject parent;
+		[Tooltip("Empty GameObject for group dead units")]
         public GameObject parentForDead;
-		//Object, that we building(unit)
+		//Unit, that will be builded
         private GameObject unit;
 		//Coordinates where unit will be instantiated
         private Vector3 spawnLocation;

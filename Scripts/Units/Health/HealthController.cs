@@ -10,6 +10,7 @@ namespace Units.Health
         private float maxHealth;
         private float currentHealth = 1;
         private float armor;
+		//Reward for killing this enemy
         private int goldForDeath;
         private int xpForDeath;
         [HideInInspector]

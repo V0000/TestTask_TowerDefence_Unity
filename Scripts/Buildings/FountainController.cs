@@ -4,7 +4,10 @@ using Utilities;
 using Units.Health;
 
 namespace Buildings
-{
+{	
+	/// <summary>
+    /// Class for healind buildings
+    /// </summary>
     public class FountainController : SpawnController
     {
 		private Collider[] hitColliders;
@@ -24,7 +27,7 @@ namespace Buildings
         }
 
 		/// <summary>
-		/// Find all minions in radius and heal they
+		/// Find all minions in radius and heal them
 		/// </summary>		
 		private IEnumerator HealAllInRadius()
         {

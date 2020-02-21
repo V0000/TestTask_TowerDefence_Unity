@@ -3,6 +3,9 @@ using System.Collections;
 
 namespace Cameras
 {
+	/// <summary>
+    /// Class controls camera movements
+    /// </summary>
     public class CameraControl : MonoBehaviour
     {
         [Header("Speed Settings")]
@@ -15,12 +18,15 @@ namespace Cameras
         public float cameraAngle = 60;
         public float maxHeight = 40;
         public float minHeight = 5;
+		[Tooltip("If we need use border of screen for moving of camera")]
         public bool useEdgeBorderForMove = false;
         [Tooltip("Distance from screen edge. Used for mouse movement")]
         public float screenEdgeBorderThickness = 20;
 
         [Header("Input Settings")]
+		[Tooltip("This key will used for left rotation of camera")]
         public KeyCode rotationLeft = KeyCode.Q;
+		[Tooltip("This key will used for right rotation of camera")]
         public KeyCode rotationRight = KeyCode.E;
 
 
@@ -35,10 +41,12 @@ namespace Cameras
 
         void Start()
         {
+			//initialize start position of camera
             cameraRotation = transform.rotation.y;
             targetCamRotation = cameraRotation;
             height = transform.position.y;
             targetHeight = height;
+			//cache the camera for easy access
             cachedCamera = GetComponent<UnityEngine.Camera>();
         }
 
@@ -49,7 +57,9 @@ namespace Cameras
             RecalculateHeight();
             MoveCameraTo(targetDirection);
         }
-
+		/// <summary>
+		/// Calculation of x&z positions
+		/// </summary>
         void RecalculatePosition()
         {
             // Tracking?
@@ -76,22 +86,29 @@ namespace Cameras
             }
 
         }
-
+		/// <summary>
+		/// Calculation of rotation camera
+		/// </summary>
         void RecalculateRotation()
         {
             if (Input.GetKey(rotationRight)) targetCamRotation -= rotationSpeed;
             else if (Input.GetKey(rotationLeft)) targetCamRotation += rotationSpeed;
             cameraRotation = Mathf.Lerp(cameraRotation, targetCamRotation, glideSpeed * Time.deltaTime);
-
         }
-
+		
+		/// <summary>
+		/// Calculation of y position
+		/// </summary>
         void RecalculateHeight()
         {
             targetHeight -= Input.GetAxis("Mouse ScrollWheel") * heightSpeed;
             targetHeight = Mathf.Clamp(targetHeight, minHeight, maxHeight);
             height = Mathf.Lerp(height, targetHeight, glideSpeed * Time.deltaTime);
         }
-
+		
+		/// <summary>
+		/// Move camera to calculated coorditates
+		/// </summary>
         void MoveCameraTo(Vector3 position)
         {
             transform.Translate(position * moveSpeed * Time.deltaTime);
@@ -104,6 +121,9 @@ namespace Cameras
             trackingObject = null;
         }
 
+		/// <summary>
+		/// Move camera using borders
+		/// </summary>
         void MoveUsingEdgeOfScreen()
         {
             if (Input.mousePosition.x <= screenEdgeBorderThickness)
