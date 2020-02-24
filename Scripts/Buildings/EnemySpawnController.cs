@@ -11,6 +11,7 @@ namespace Buildings
         public WaveScheduler waveScheduler;
         private List<Enemy> listOfEnemies;
         private int numInList = 0;
+        
 
         override protected void Start()
         {
@@ -43,10 +44,12 @@ namespace Buildings
             yield return new WaitForSeconds(time);
             if (selectedUnit != null)
             {
-                CreateUnit();
+                CreateUnit(spawnLocation + new Vector3(Random.Range(-10.0f, 10.0f), 0, 0));
             }
             StartNextEnemy();
         }
+
+
 
     }
 }

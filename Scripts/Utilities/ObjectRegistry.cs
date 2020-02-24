@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -83,6 +84,7 @@ namespace Utilities
             {
                 minions.Remove(unit);
             }
+            //Debug.Log(String.Format("{0} enemies, {1} minions",enemies.Count(), minions.Count()));
         }
 
         public static void UpdateCountOfUnits()

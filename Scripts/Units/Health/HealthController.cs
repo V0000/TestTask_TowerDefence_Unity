@@ -10,17 +10,20 @@ namespace Units.Health
         private float maxHealth;
         private float currentHealth = 1;
         private float armor;
-		//Reward for killing this enemy
+        //Reward for killing this enemy
         private int goldForDeath;
         private int xpForDeath;
         [HideInInspector]
         public GameObject deadUnit;
-        
+
         public GameObject parentForDead;
-		
+        private UnitBehaviour unitBehaviour;
+
         [HideInInspector]
         public bool isEnemy;
 
+        public delegate void deadCallback();
+        public deadCallback OnDead = delegate { };
 
 
 
@@ -107,6 +110,11 @@ namespace Units.Health
 
         #endregion
 
+        void Start()
+        {
+            unitBehaviour = GetComponent<UnitBehaviour>();
+
+        }
 
         public void TakeDamage(float damage)
         {
@@ -144,17 +152,21 @@ namespace Units.Health
 
         public void DeadOfUnit()
         {
-			//Reward for killing enemy
+            //Reward for killing enemy
             if (isEnemy)
-			{
-				ObjectRegistry.gold += goldForDeath;
-				ObjectRegistry.xp += xpForDeath;
-			}
-			
+            {
+                ObjectRegistry.gold += goldForDeath;
+                ObjectRegistry.xp += xpForDeath;
+            }
+
+            OnDead();
+            unitBehaviour.UnitIsDead();
             ObjectRegistry.RemoveUnit(gameObject, isEnemy);
             Destroy(GetComponent<Rigidbody>());
+            Destroy(GetComponent<MeshRenderer>());
             InstantiateDeadUnit();
             Destroy(gameObject);
+
         }
 
 

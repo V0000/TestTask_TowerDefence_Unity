@@ -9,7 +9,7 @@ namespace Buildings
     /// </summary>
 	[RequireComponent(typeof(UnitBuilder))]
     public abstract class SpawnController : MonoBehaviour
-    
+    { 
 		//settings for build unit
         protected UnitData selectedUnit;
 		private UnitBuilder builder;
@@ -28,9 +28,9 @@ namespace Buildings
 		/// <summary>
 		/// Build unit and set in coordinates
 		/// </summary>
-        protected void CreateUnit()
+        protected void CreateUnit(Vector3 spawnCoordinates)
         {
-            builder.NewUnit(selectedUnit, spawnLocation);
+            builder.NewUnit(selectedUnit, spawnCoordinates);
         }
 		/// <summary>
 		/// Spawn unit every time seconds
@@ -44,7 +44,7 @@ namespace Buildings
                 if (selectedUnit != null)
                 {
 
-                    CreateUnit();
+                    CreateUnit(spawnLocation);
                 }
             }
         }

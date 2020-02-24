@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Units.Attack
 {
-	/// <summary>
+    /// <summary>
     /// Class implement attack of any unit
     /// </summary>
     public class AttackController : MonoBehaviour
@@ -14,17 +14,18 @@ namespace Units.Attack
         private float attackSpeed;
         [HideInInspector]
         public float attackDistance = 0;
-		private bool attackRunning = false;
-		//healthController of prey
+        private bool attackRunning = false;
+        //healthController of prey
         private HealthController healthControllerTarget;
-		private float timeForStartAttack = 1f;
-		[HideInInspector]
-		public GameObject target;
-		
-		void Start()
+        private UnitBehaviour unitBehaviour;
+        private float timeForStartAttack = 1f;
+        [HideInInspector]
+        public GameObject target;
+
+        void Start()
         {
-            
-            StartCoroutine(AttackSwicher()); 
+            unitBehaviour = GetComponent<UnitBehaviour>();
+            StartCoroutine(AttackSwicher());
         }
 
         #region Properties
@@ -40,7 +41,7 @@ namespace Units.Attack
             {
                 if (value > 0)
                 {
-                    
+
                     attack = value;
                 }
             }
@@ -65,14 +66,14 @@ namespace Units.Attack
         {
             get
             {
-                
+
                 return attackDistance;
             }
             set
             {
                 if (value > 0)
                 {
-                   
+
                     attackDistance = value;
                 }
             }
@@ -82,45 +83,50 @@ namespace Units.Attack
 
         private IEnumerator AttackPerTime()
         {
+            Debug.Log(healthControllerTarget);
+            if (healthControllerTarget != null)
+            {
+                
+                healthControllerTarget.TakeDamage(attack);
+            }
+            else
+            {
+                //unitBehaviour.TargetIsDead();
+            }
             
-            healthControllerTarget.TakeDamage(attack);
-                yield return new WaitForSeconds(attackSpeed);
-				StartCoroutine(AttackPerTime());            
+            yield return new WaitForSeconds(attackSpeed);
+            StartCoroutine(AttackPerTime());
         }
-		
-		/// <summary>
-		/// Start and stop attack according to distance from target
-		/// </summary>
+
+        /// <summary>
+        /// Start and stop attack according to distance from target
+        /// </summary>
         public IEnumerator AttackSwicher()
         {
-			
-				if (target == null)
-				{
-					yield return null;
-				}
-            
-            if (Vector3.Distance(target.transform.position, transform.position) < attackDistance)
-				{
-                
+
+
+            if (target != null && Vector3.Distance(target.transform.position, transform.position) < attackDistance)
+            {
+
                 if (!attackRunning)
-					{
-                        
-						attackRunning = true;
-						healthControllerTarget = target.GetComponent<HealthController>();
-						StartCoroutine(AttackPerTime());
-					}
-				}
-				else
-				{
-					if (attackRunning)
-					{
-						attackRunning = false;
-						StopCoroutine(AttackPerTime());
-					}
-				}
-				yield return new WaitForSeconds(timeForStartAttack);
-			StartCoroutine(AttackSwicher()); 
-        }		
+                {
+
+                    attackRunning = true;
+                    healthControllerTarget = target.GetComponent<HealthController>();
+                    StartCoroutine(AttackPerTime());
+                }
+            }
+            else
+            {
+                if (attackRunning)
+                {
+                    attackRunning = false;
+                    StopCoroutine(AttackPerTime());
+                }
+            }
+            yield return new WaitForSeconds(timeForStartAttack);
+            StartCoroutine(AttackSwicher());
+        }
 
     }
 }

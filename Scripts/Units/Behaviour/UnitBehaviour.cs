@@ -15,8 +15,8 @@ namespace Units
         public GameObject target;
         private NavMeshAgent agent;
         private AttackController attackController;
-        private HealthController healthController;        
-		private float timeForFingTarget = 1f;
+        private HealthController healthControllerTarget;
+        private float timeForFingTarget = 2f;
 
 
         void Start()
@@ -24,7 +24,6 @@ namespace Units
             ObjectRegistry.AddUnit(gameObject, isEnemy);
             agent = GetComponent<NavMeshAgent>();
             attackController = GetComponent<AttackController>();
-            healthController = GetComponent<HealthController>();
             StartCoroutine(FindTargetPerTime(timeForFingTarget));
         }
 
@@ -32,7 +31,7 @@ namespace Units
         {
             if(target!=null)
             {
-                Debug.DrawRay(transform.position, target.transform.position - transform.position, Color.yellow);
+               Debug.DrawRay(transform.position, target.transform.position - transform.position, isEnemy? Color.red: Color.yellow);
             }
             
         }		
@@ -41,7 +40,7 @@ namespace Units
         {
 
                 yield return StartCoroutine(UpdateTargets());
-				agent.destination = target.transform.position;               
+                agent.destination = target != null ? target.transform.position : transform.position;               
                 yield return new WaitForSeconds(time);
 				StartCoroutine(FindTargetPerTime(timeForFingTarget));
             
@@ -53,7 +52,9 @@ namespace Units
             {
                 target = ObjectRegistry.GetNearestTarget(transform, isEnemy);                
                 attackController.target = target;
-            }
+                healthControllerTarget = target.GetComponent<HealthController>();
+                healthControllerTarget.OnDead += TargetIsDead;
+    }
             else
             {
                 if(isEnemy)
@@ -68,6 +69,16 @@ namespace Units
 				}	
             }
             yield return null;
-        }       
+        }   
+        
+        public void TargetIsDead()
+        {
+            target = ObjectRegistry.fountain;
+            StartCoroutine(UpdateTargets());
+        }
+        public void UnitIsDead()
+        {
+            healthControllerTarget.OnDead -= TargetIsDead;
+        }
     }
 }

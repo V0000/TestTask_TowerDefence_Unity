@@ -2,6 +2,7 @@
 using System.Collections;
 using Utilities;
 using Units.Health;
+using System;
 
 namespace Buildings
 {	
@@ -20,10 +21,10 @@ namespace Buildings
 		{
 			ObjectRegistry.fountain = gameObject;
 		}
-		void Start()
-        {            
+		protected override void Start()
+		{            
 			center = transform.position;			
-			StartCoroutine(HealAllInRadius()); 
+			//StartCoroutine(HealAllInRadius()); 
         }
 
 		/// <summary>
@@ -36,7 +37,15 @@ namespace Buildings
 			{
 				foreach (Collider unitCollider in hitColliders)
 				{
-					unitCollider.gameObject.GetComponent<HealthController>().AddHealth(healValue);
+					try
+					{
+						unitCollider.gameObject.GetComponent<HealthController>().AddHealth(healValue);
+					}
+					catch
+					{
+						Debug.LogWarning(String.Format("Object {0} haven't HealthController", unitCollider.gameObject));
+					}
+					
 				}
 			}
 			yield return new WaitForSeconds(healFrequency);

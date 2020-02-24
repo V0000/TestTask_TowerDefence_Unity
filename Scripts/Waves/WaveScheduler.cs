@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ namespace Waves
                 }
 
             }
-            Debug.Log("In wave schedule:" + listOfEnemies.Count);            
+            Debug.Log(String.Format("In wave schedule:{0} enemies total",listOfEnemies.Count));            
             return listOfEnemies;
 
 
