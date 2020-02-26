@@ -8,7 +8,7 @@ namespace Units.Health
     public class HealthController : MonoBehaviour
     {
         private float maxHealth;
-        private float currentHealth = 1;
+        public float currentHealth = 1;
         private float armor;
         //Reward for killing this enemy
         private int goldForDeath;
@@ -21,6 +21,7 @@ namespace Units.Health
 
         [HideInInspector]
         public bool isEnemy;
+        public bool isDead;
 
         public delegate void deadCallback();
         public deadCallback OnDead = delegate { };
@@ -112,6 +113,7 @@ namespace Units.Health
 
         void Start()
         {
+            isDead = false;
             unitBehaviour = GetComponent<UnitBehaviour>();
 
         }
@@ -125,7 +127,8 @@ namespace Units.Health
             currentHealth -= damage;
             if (currentHealth <= 0)
             {
-                DeadOfUnit();
+                //nobody can't be dead twice
+                if (!isDead) DeadOfUnit();
             }
         }
 
@@ -145,6 +148,7 @@ namespace Units.Health
             }
             if (currentHealth + healthIncrement > maxHealth)
             {
+                
                 currentHealth = maxHealth;
             }
             currentHealth += healthIncrement;
@@ -152,21 +156,23 @@ namespace Units.Health
 
         public void DeadOfUnit()
         {
-            //Reward for killing enemy
-            if (isEnemy)
-            {
-                ObjectRegistry.gold += goldForDeath;
-                ObjectRegistry.xp += xpForDeath;
-            }
-
-            OnDead();
-            unitBehaviour.UnitIsDead();
-            ObjectRegistry.RemoveUnit(gameObject, isEnemy);
-            Destroy(GetComponent<Rigidbody>());
-            Destroy(GetComponent<MeshRenderer>());
-            InstantiateDeadUnit();
-            Destroy(gameObject);
-
+            
+                //Reward for killing enemy
+                if (isEnemy)
+                {
+                    ObjectRegistry.gold += goldForDeath;
+                    ObjectRegistry.xp += xpForDeath;
+                }
+                isDead = true;
+                OnDead();
+                unitBehaviour.UnitIsDead();
+                ObjectRegistry.RemoveUnit(gameObject, isEnemy);
+                Destroy(GetComponent<Rigidbody>());
+                //Destroy(GetComponent<UnitBehaviour>());
+                Destroy(GetComponent<MeshRenderer>());                
+                InstantiateDeadUnit();
+                Destroy(gameObject, 3);
+            
         }
 
 

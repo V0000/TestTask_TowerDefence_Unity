@@ -17,14 +17,15 @@ namespace Units.Attack
         private bool attackRunning = false;
         //healthController of prey
         private HealthController healthControllerTarget;
-        private UnitBehaviour unitBehaviour;
-        private float timeForStartAttack = 1f;
+        
+        private float timeForStartAttack = 2f;
+
         [HideInInspector]
         public GameObject target;
 
         void Start()
         {
-            unitBehaviour = GetComponent<UnitBehaviour>();
+            
             StartCoroutine(AttackSwicher());
         }
 
@@ -83,6 +84,7 @@ namespace Units.Attack
 
         private IEnumerator AttackPerTime()
         {
+ 
             Debug.Log(healthControllerTarget);
             if (healthControllerTarget != null)
             {
@@ -95,6 +97,7 @@ namespace Units.Attack
             }
             
             yield return new WaitForSeconds(attackSpeed);
+
             StartCoroutine(AttackPerTime());
         }
 
