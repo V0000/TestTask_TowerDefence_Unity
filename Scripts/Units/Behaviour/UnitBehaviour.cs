@@ -68,7 +68,7 @@ namespace Units
 					attackController.target = null;
 				}	
             }
-            return null;
+            yield return null;
         }   
         
         public void TargetIsDead()

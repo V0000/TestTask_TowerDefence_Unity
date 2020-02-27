@@ -97,9 +97,10 @@ namespace Units.Attack
                 //TODO
             }
             
-            yield return new WaitForSeconds(attackSpeed);
+           yield return new WaitForSeconds(attackSpeed);
 
             StartCoroutine(AttackPerTime());
+            //yield return null;
         }
 
         /// <summary>
@@ -117,7 +118,7 @@ namespace Units.Attack
 
                     attackRunning = true;
                     healthControllerTarget = target.GetComponent<HealthController>();
-                    StartCoroutine(AttackPerTime());
+                   StartCoroutine(AttackPerTime());
                 }
             }
             else
@@ -125,7 +126,7 @@ namespace Units.Attack
                 if (attackRunning)
                 {
                     attackRunning = false;
-                    StopCoroutine(AttackPerTime());
+                   StopCoroutine(AttackPerTime());
                 }
             }
             yield return new WaitForSeconds(timeForStartAttack);
