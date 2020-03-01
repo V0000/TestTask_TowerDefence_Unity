@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Utilities;
 
 namespace Units.Health
@@ -17,6 +18,7 @@ namespace Units.Health
         public GameObject deadUnit;
 
         public GameObject parentForDead;
+        public Image healthBar;
         private UnitBehaviour unitBehaviour;
 
         [HideInInspector]
@@ -42,6 +44,7 @@ namespace Units.Health
                 if (value > 0)
                 {
                     maxHealth = value;
+                    
                 }
             }
         }
@@ -73,6 +76,7 @@ namespace Units.Health
                 if (value > 0)
                 {
                     currentHealth = value;
+                    
                 }
             }
 
@@ -118,6 +122,12 @@ namespace Units.Health
 
         }
 
+        void Update()
+        {
+            //healthBar.fillAmount = Mathf.InverseLerp(0, maxHealth, currentHealth);
+            
+        }
+
         public void TakeDamage(float damage)
         {
             if (damage <= 0)
@@ -125,6 +135,7 @@ namespace Units.Health
                 return;
             }
             currentHealth -= damage;
+            healthBar.fillAmount = Mathf.InverseLerp(0, maxHealth, currentHealth);
             if (currentHealth <= 0)
             {
                 //nobody can't be dead twice
@@ -152,6 +163,7 @@ namespace Units.Health
                 currentHealth = maxHealth;
             }
             currentHealth += healthIncrement;
+            healthBar.fillAmount = Mathf.InverseLerp(0, maxHealth, currentHealth);
         }
 
         public void DeadOfUnit()
@@ -169,8 +181,14 @@ namespace Units.Health
                 ObjectRegistry.RemoveUnit(gameObject, isEnemy);
                 Destroy(GetComponent<Rigidbody>());
                 //Destroy(GetComponent<UnitBehaviour>());
-                Destroy(GetComponent<MeshRenderer>());                
-                InstantiateDeadUnit();
+                Destroy(GetComponent<MeshRenderer>());
+
+                foreach (Transform child in transform)
+                {
+                    GameObject.Destroy(child.gameObject);
+                }
+
+            InstantiateDeadUnit();
                 Destroy(gameObject, 3);
             
         }

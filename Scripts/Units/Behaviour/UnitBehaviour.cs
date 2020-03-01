@@ -53,6 +53,7 @@ namespace Units
                 target = ObjectRegistry.GetNearestTarget(transform, isEnemy);                
                 attackController.target = target;
                 if (target != null) healthControllerTarget = target.GetComponent<HealthController>();
+                attackController.healthControllerTarget = healthControllerTarget;
                 healthControllerTarget.OnDead += TargetIsDead;
     }
             else

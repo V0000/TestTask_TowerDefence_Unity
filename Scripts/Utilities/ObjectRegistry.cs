@@ -16,6 +16,9 @@ namespace Utilities
         private static List<GameObject> enemies = new List<GameObject>();
         private static List<GameObject> minions = new List<GameObject>();
 
+        //Main Camera
+        public static GameObject mainCamera;
+
         //Healer
         public static GameObject fountain;
 

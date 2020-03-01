@@ -12,21 +12,29 @@ namespace Units.Attack
         [HideInInspector]
         public float attack;
         private float attackSpeed;
+        private float timer;
         [HideInInspector]
         public float attackDistance = 0;
-        private bool attackRunning = false;
+
         //healthController of prey
-        private HealthController healthControllerTarget;
-        
-        private float timeForStartAttack = 2f;
+        public HealthController healthControllerTarget;
+
 
         [HideInInspector]
         public GameObject target;
 
-        void Start()
+        void Update()
         {
-            
-            StartCoroutine(AttackSwicher());
+            if (timer > attackSpeed)
+            {
+                AttackTarget();
+                timer = 0;
+            }
+            else
+            {
+                timer += Time.deltaTime;
+            }
+
         }
 
         #region Properties
@@ -82,56 +90,34 @@ namespace Units.Attack
 
         #endregion
 
-        private IEnumerator AttackPerTime()
+        private void Hit()
         {
- 
+
             Debug.Log(healthControllerTarget);
             if (healthControllerTarget != null)
             {
-                
+
                 healthControllerTarget.TakeDamage(attack);
             }
-            else
-            {
-                //unitBehaviour.TargetIsDead();
-                //TODO
-            }
-            
-           yield return new WaitForSeconds(attackSpeed);
 
-            StartCoroutine(AttackPerTime());
-            //yield return null;
         }
 
         /// <summary>
         /// Start and stop attack according to distance from target
         /// </summary>
-        public IEnumerator AttackSwicher()
+        public void AttackTarget()
         {
 
 
             if (target != null && Vector3.Distance(target.transform.position, transform.position) < attackDistance)
             {
-
-                if (!attackRunning)
                 {
+                    Hit();
 
-                    attackRunning = true;
-                    healthControllerTarget = target.GetComponent<HealthController>();
-                   StartCoroutine(AttackPerTime());
                 }
+
             }
-            else
-            {
-                if (attackRunning)
-                {
-                    attackRunning = false;
-                   StopCoroutine(AttackPerTime());
-                }
-            }
-            yield return new WaitForSeconds(timeForStartAttack);
-            StartCoroutine(AttackSwicher());
+
         }
-
     }
 }

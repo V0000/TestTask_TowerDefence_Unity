@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Utilities;
 
 namespace Cameras
 {
@@ -39,6 +40,10 @@ namespace Cameras
         private Camera cachedCamera;
         public GameObject trackingObject;
 
+        void Awake()
+        {
+            ObjectRegistry.mainCamera = gameObject;
+        }
         void Start()
         {
 			//initialize start position of camera

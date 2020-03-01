@@ -31,20 +31,22 @@ namespace Buildings
         /// <param name="spawnLocation">Where you will spawn unit</param>
         public void NewUnit(UnitData data, Vector3 spawnLocation)
         {
-            BuildUnit(data);
-            InstantiateUnit(unit, spawnLocation);
+            BuildUnit(data, spawnLocation);
+            
         }
 
         /// <summary>
         /// Build unit from prefab and set settings from UnitData
         /// </summary>
         /// <param name="data">List of settings</param>
-        void BuildUnit(UnitData data)
+        void BuildUnit(UnitData data, Vector3 spawnLocation)
         {
             unit = data.prefab;            
 
             //set appearance settings
             SetMaterial(unit, data.material);
+
+            InstantiateUnit(unit, spawnLocation);
 
             //set move settings
             navMeshAgent = unit.GetComponent<NavMeshAgent>();
