@@ -8,9 +8,9 @@ namespace Units.Health
 {
     public class HealthController : MonoBehaviour
     {
-        private float maxHealth;
+        public float maxHealth;
         public float currentHealth = 1;
-        private float armor;
+        public float armor;
         //Reward for killing this enemy
         private int goldForDeath;
         private int xpForDeath;
@@ -44,7 +44,7 @@ namespace Units.Health
                 if (value > 0)
                 {
                     maxHealth = value;
-                    
+
                 }
             }
         }
@@ -76,7 +76,7 @@ namespace Units.Health
                 if (value > 0)
                 {
                     currentHealth = value;
-                    
+
                 }
             }
 
@@ -125,7 +125,7 @@ namespace Units.Health
         void Update()
         {
             //healthBar.fillAmount = Mathf.InverseLerp(0, maxHealth, currentHealth);
-            
+
         }
 
         public void TakeDamage(float damage)
@@ -159,7 +159,7 @@ namespace Units.Health
             }
             if (currentHealth + healthIncrement > maxHealth)
             {
-                
+
                 currentHealth = maxHealth;
             }
             currentHealth += healthIncrement;
@@ -168,29 +168,31 @@ namespace Units.Health
 
         public void DeadOfUnit()
         {
-            
-                //Reward for killing enemy
-                if (isEnemy)
-                {
-                    ObjectRegistry.gold += goldForDeath;
-                    ObjectRegistry.xp += xpForDeath;
-                }
-                isDead = true;
-                OnDead();
-                unitBehaviour.UnitIsDead();
-                ObjectRegistry.RemoveUnit(gameObject, isEnemy);
-                Destroy(GetComponent<Rigidbody>());
-                //Destroy(GetComponent<UnitBehaviour>());
-                Destroy(GetComponent<MeshRenderer>());
 
-                foreach (Transform child in transform)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
+            //Reward for killing enemy
+            if (isEnemy)
+            {
+                ObjectRegistry.gold += goldForDeath;
+                ObjectRegistry.xp += xpForDeath;
+            }
+            isDead = true;
+            OnDead();
+            unitBehaviour.UnitIsDead();
+            ObjectRegistry.RemoveUnit(gameObject, isEnemy);
+            Destroy(GetComponent<Rigidbody>());
+            //Destroy(GetComponent<UnitBehaviour>());
+            Destroy(GetComponent<MeshRenderer>());
+            Destroy(gameObject.transform.Find("Head"));
+            Destroy(gameObject.transform.Find("Marker"));
+
+            foreach (Transform child in transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
 
             InstantiateDeadUnit();
-                Destroy(gameObject, 3);
-            
+            Destroy(gameObject, 6);
+
         }
 
 
