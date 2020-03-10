@@ -10,6 +10,6 @@ public class AlwaysTurnOnCamera : MonoBehaviour {
 	{
 		Vector3 dir = ObjectRegistry.mainCamera.transform.position - transform.position;
 		dir.y = 0;
-		transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), turnSpeed * Time.deltaTime);
+		transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), turnSpeed * Time.deltaTime, Space.World);
 	}
 }
