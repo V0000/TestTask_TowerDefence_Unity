@@ -43,14 +43,14 @@ namespace Buildings
         /// <param name="data">List of settings</param>
         void BuildUnit(UnitData data, Vector3 spawnLocation)
         {
-            unit = data.prefab;
+            unit = InstantiateUnit(data.prefab, spawnLocation);
             unit.name = data.nameOfUnit;
             Debug.Log(unit.name + " is start build");
 
             //set appearance settings
             SetMaterial(unit, data.material);
 
-            InstantiateUnit(unit, spawnLocation);
+            
 
             //set move settings
             navMeshAgent = unit.GetComponent<NavMeshAgent>();
@@ -82,13 +82,13 @@ namespace Buildings
         /// <summary>
         /// Set builded unit on coordinates
         /// </summary>
-        void InstantiateUnit(GameObject unit, Vector3 spawnLocation)
+        GameObject InstantiateUnit(GameObject unit, Vector3 spawnLocation)
         {
             GameObject spawnedUnit = Instantiate(unit);
 			//Set parent for group instantiated units
             spawnedUnit.transform.parent = parent.transform;
-            spawnedUnit.transform.localPosition = spawnLocation;            
-
+            spawnedUnit.transform.localPosition = spawnLocation;
+            return spawnedUnit;
         }
 		
         /// <summary>
