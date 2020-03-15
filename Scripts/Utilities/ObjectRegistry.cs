@@ -32,6 +32,7 @@ namespace Utilities
         //Count of units
         public static int minionsCount = 0;
         public static int enemyCount = 0;
+        public static int allUnitsCount = 0;
         /// <summary>
         /// Find in lists of units nearest object
         /// </summary>

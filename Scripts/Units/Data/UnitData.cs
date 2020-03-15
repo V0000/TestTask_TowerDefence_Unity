@@ -6,6 +6,7 @@ namespace Units.Data
     public class UnitData : ScriptableObject
     {
         [Header("Units Settings")]
+        public string nameOfUnit;
         //Fields for HealthController
         public float maxHealth;
         [Range(0, 1)]

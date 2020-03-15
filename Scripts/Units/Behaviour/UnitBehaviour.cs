@@ -69,6 +69,7 @@ namespace Units
 					attackController.target = null;
 				}	
             }
+            Debug.Log(gameObject.name + " isEnemy " + isEnemy + " attack " + target.name);
             yield return null;
         }   
         

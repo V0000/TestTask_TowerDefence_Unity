@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Units;
 using Units.Attack;
@@ -23,6 +24,7 @@ namespace Buildings
         private UnitBehaviour unitBehaviour;
         private HealthController healthController;
         private AttackController attackController;
+        
 
         /// <summary>
         /// Spawn unit on specific coordinates
@@ -41,7 +43,9 @@ namespace Buildings
         /// <param name="data">List of settings</param>
         void BuildUnit(UnitData data, Vector3 spawnLocation)
         {
-            unit = data.prefab;            
+            unit = data.prefab;
+            unit.name = data.nameOfUnit;
+            Debug.Log(unit.name + " is start build");
 
             //set appearance settings
             SetMaterial(unit, data.material);
@@ -83,8 +87,7 @@ namespace Buildings
             GameObject spawnedUnit = Instantiate(unit);
 			//Set parent for group instantiated units
             spawnedUnit.transform.parent = parent.transform;
-            spawnedUnit.transform.localPosition = spawnLocation;
-
+            spawnedUnit.transform.localPosition = spawnLocation;            
 
         }
 		

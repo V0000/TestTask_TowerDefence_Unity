@@ -21,7 +21,7 @@ namespace Units.Health
         public Image healthBar;
         private UnitBehaviour unitBehaviour;
 
-        [HideInInspector]
+        //[HideInInspector]
         public bool isEnemy;
         public bool isDead;
 
@@ -182,15 +182,13 @@ namespace Units.Health
             Destroy(GetComponent<Rigidbody>());
             //Destroy(GetComponent<UnitBehaviour>());
             Destroy(GetComponent<MeshRenderer>());
-            Destroy(gameObject.transform.Find("Head"));
-            Destroy(gameObject.transform.Find("Marker"));
-
-            foreach (Transform child in transform)
+            //Deactivate all childs
+            for (int i = 0; i < gameObject.transform.childCount; i++)
             {
-                GameObject.Destroy(child.gameObject);
+                gameObject.transform.GetChild(i).gameObject.SetActive(false); 
             }
 
-            InstantiateDeadUnit();
+            //InstantiateDeadUnit();
             Destroy(gameObject, 6);
 
         }

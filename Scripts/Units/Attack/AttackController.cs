@@ -93,7 +93,7 @@ namespace Units.Attack
         private void Hit()
         {
 
-            Debug.Log(healthControllerTarget);
+            
             if (healthControllerTarget != null)
             {
 
