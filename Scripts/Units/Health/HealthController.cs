@@ -122,11 +122,7 @@ namespace Units.Health
 
         }
 
-        void Update()
-        {
-            //healthBar.fillAmount = Mathf.InverseLerp(0, maxHealth, currentHealth);
 
-        }
 
         public void TakeDamage(float damage)
         {
@@ -141,6 +137,8 @@ namespace Units.Health
                 //nobody can't be dead twice
                 if (!isDead) DeadOfUnit();
             }
+
+
         }
 
         /// <summary>
@@ -188,8 +186,8 @@ namespace Units.Health
                 gameObject.transform.GetChild(i).gameObject.SetActive(false); 
             }
 
-            //InstantiateDeadUnit();
-            Destroy(gameObject, 6);
+            InstantiateDeadUnit();
+            Destroy(gameObject, 10);
 
         }
 

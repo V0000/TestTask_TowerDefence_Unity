@@ -17,6 +17,7 @@ namespace Units
         private AttackController attackController;
         private HealthController healthControllerTarget;
         private float timeForFingTarget = 2f;
+        private float timer;
 
 
         void Start()
@@ -24,7 +25,20 @@ namespace Units
             ObjectRegistry.AddUnit(gameObject, isEnemy);
             agent = GetComponent<NavMeshAgent>();
             attackController = GetComponent<AttackController>();
-            StartCoroutine(FindTargetPerTime(timeForFingTarget));
+            
+        }
+
+        void Update()
+        {
+            if (timer > timeForFingTarget)
+            {
+                FindTargetPerTime();
+                timer = 0;
+            }
+            else
+            {
+                timer += Time.deltaTime;
+            }
         }
 
         void OnDrawGizmos()
@@ -36,17 +50,14 @@ namespace Units
             
         }		
 		
-		private IEnumerator FindTargetPerTime(float time)
+		private void FindTargetPerTime()
         {
-
-                yield return StartCoroutine(UpdateTargets());
-                agent.destination = target != null ? target.transform.position : transform.position;               
-                yield return new WaitForSeconds(time);
-				StartCoroutine(FindTargetPerTime(timeForFingTarget));
+                UpdateTargets();
+                agent.destination = target != null ? target.transform.position : transform.position;               			
             
         } 
 
-        private IEnumerator UpdateTargets()
+        private void UpdateTargets()
         {
             if (ObjectRegistry.TargetIsExist(isEnemy))
             {
@@ -69,14 +80,14 @@ namespace Units
 					attackController.target = null;
 				}	
             }
-            Debug.Log(gameObject.name + " isEnemy " + isEnemy + " attack " + target.name);
-            yield return null;
+            //Debug.Log(gameObject.name + " isEnemy " + isEnemy + " attack " + target.name);
+            
         }   
         
         public void TargetIsDead()
         {
             target = ObjectRegistry.fountain;
-            StartCoroutine(UpdateTargets());
+            UpdateTargets();
         }
         public void UnitIsDead()
         {

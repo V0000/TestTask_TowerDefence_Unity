@@ -44,7 +44,7 @@ namespace Buildings
         void BuildUnit(UnitData data, Vector3 spawnLocation)
         {
             unit = InstantiateUnit(data.prefab, spawnLocation);
-            unit.name = data.nameOfUnit;
+            unit.name = data.nameOfUnit+ '_' + ObjectRegistry.allUnitsCount++.ToString();
             Debug.Log(unit.name + " is start build");
 
             //set appearance settings
