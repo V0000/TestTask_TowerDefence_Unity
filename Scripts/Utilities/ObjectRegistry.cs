@@ -80,6 +80,7 @@ namespace Utilities
         }
         public static void RemoveUnit(GameObject unit, bool youIsEnemy)
         {
+            Debug.Log(String.Format("{0} enemies, {1} minions", enemies.Count(), minions.Count()));
             if (youIsEnemy)
             {
                 enemies.Remove(unit);
@@ -88,7 +89,7 @@ namespace Utilities
             {
                 minions.Remove(unit);
             }
-            //Debug.Log(String.Format("{0} enemies, {1} minions",enemies.Count(), minions.Count()));
+            Debug.Log(String.Format("{0} enemies, {1} minions, {2} deleted",enemies.Count(), minions.Count(), unit.name));
         }
 
         public static void UpdateCountOfUnits()

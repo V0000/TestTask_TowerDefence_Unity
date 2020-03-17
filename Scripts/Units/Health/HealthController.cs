@@ -124,8 +124,11 @@ namespace Units.Health
 
 
 
+
+
         public void TakeDamage(float damage)
         {
+
             if (damage <= 0)
             {
                 return;
@@ -135,9 +138,10 @@ namespace Units.Health
             if (currentHealth <= 0)
             {
                 //nobody can't be dead twice
+                
                 if (!isDead) DeadOfUnit();
             }
-
+            Debug.Log(currentHealth + " is currentHealth of " + gameObject.name);
 
         }
 
@@ -181,13 +185,14 @@ namespace Units.Health
             //Destroy(GetComponent<UnitBehaviour>());
             Destroy(GetComponent<MeshRenderer>());
             //Deactivate all childs
+            gameObject.SetActive(false);
             for (int i = 0; i < gameObject.transform.childCount; i++)
             {
                 gameObject.transform.GetChild(i).gameObject.SetActive(false); 
             }
-
+            Debug.Log(gameObject.name + " is Dead");
             InstantiateDeadUnit();
-            Destroy(gameObject, 10);
+            Destroy(gameObject);
 
         }
 

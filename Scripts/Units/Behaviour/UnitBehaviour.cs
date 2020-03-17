@@ -16,7 +16,7 @@ namespace Units
         private NavMeshAgent agent;
         private AttackController attackController;
         private HealthController healthControllerTarget;
-        private float timeForFingTarget = 2f;
+        private float timeRefreshTarget = 3f;
         private float timer;
 
 
@@ -25,12 +25,13 @@ namespace Units
             ObjectRegistry.AddUnit(gameObject, isEnemy);
             agent = GetComponent<NavMeshAgent>();
             attackController = GetComponent<AttackController>();
-            
+            FindTargetPerTime();
+
         }
 
         void Update()
         {
-            if (timer > timeForFingTarget)
+            if (timer > timeRefreshTarget)
             {
                 FindTargetPerTime();
                 timer = 0;

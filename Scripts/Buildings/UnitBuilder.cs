@@ -45,7 +45,7 @@ namespace Buildings
         {
             unit = InstantiateUnit(data.prefab, spawnLocation);
             unit.name = data.nameOfUnit+ '_' + ObjectRegistry.allUnitsCount++.ToString();
-            Debug.Log(unit.name + " is start build");
+            //Debug.Log(unit.name + " is start build");
 
             //set appearance settings
             SetMaterial(unit, data.material);
